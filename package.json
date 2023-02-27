@@ -25,7 +25,9 @@
   },
   "homepage": "https://github.com/ivannrudoy/kts-2023-github-client/issues",
   "private": true,
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/react": "^18.0.28"
+  },
   "dependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "babel": "^6.23.0",
