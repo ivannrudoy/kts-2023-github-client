@@ -3,9 +3,9 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { HashRouter } from "react-router-dom";
 
-import "regenerator-runtime";
-import "@config/configureMobX";
 import App from "./App";
+
+import "regenerator-runtime";
 
 const rootId = "root";
 const container = document.getElementById(rootId) as HTMLElement;
