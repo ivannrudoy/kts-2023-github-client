@@ -15,7 +15,7 @@ type PrivateFields = "_data" | "_responseState";
 
 abstract class GithubStore<I, O> implements ILocalStore {
   private readonly _apiStorage = new ApiStore(Baseurls.GITHUB);
-  protected _data: CollecionModel<string, O> = {
+  protected _data: CollecionModel<number, O> = {
     order: [],
     entities: {},
   };
@@ -35,7 +35,7 @@ abstract class GithubStore<I, O> implements ILocalStore {
     return liniarizeCollection(this._data);
   }
 
-  setData(d: CollecionModel<string, O>) {
+  setData(d: CollecionModel<number, O>) {
     this._data = d;
   }
 
@@ -72,9 +72,7 @@ abstract class GithubStore<I, O> implements ILocalStore {
 
   abstract normalizeApiData(d: I): void;
 
-  destroy(): void {
-    throw new Error("Method not implemented.");
-  }
+  destroy(): void {}
 }
 
 export default GithubStore;

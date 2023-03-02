@@ -1,5 +1,15 @@
-type RepositoryApi = {};
+type RepositoryApi = {
+  id: number;
+};
 
-type RepositoryModel = {};
+type RepositoryModel = {
+  id: number;
+};
 
-export { RepositoryApi, RepositoryModel };
+const normalizeRepository = (from: RepositoryApi): RepositoryModel => {
+  return {
+    id: from.id,
+  };
+};
+
+export { RepositoryApi, RepositoryModel, normalizeRepository };

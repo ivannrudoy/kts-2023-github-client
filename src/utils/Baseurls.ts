@@ -1,5 +1,5 @@
 enum Baseurls {
-  GITHUB = "https://api.github.com/",
+  GITHUB = "https://api.github.com",
 }
 
 export { Baseurls };

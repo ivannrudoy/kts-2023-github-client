@@ -1,8 +1,14 @@
 import GithubStore from "@store/GithubStore";
-import { RepositoryApi, RepositoryModel } from "@store/models/Github";
+import {
+  normalizeRepository,
+  RepositoryApi,
+  RepositoryModel,
+} from "@store/models/Github";
+import { normalizeCollection } from "@store/models/shared/collection";
 import { action, computed, makeObservable, observable } from "mobx";
 
 type PrivateFields = "_list";
+const ORG = "ktsstudio";
 
 class RepositoriesStore extends GithubStore<RepositoryApi[], RepositoryModel> {
   private _list: RepositoryModel[] = [];
@@ -24,8 +30,17 @@ class RepositoriesStore extends GithubStore<RepositoryApi[], RepositoryModel> {
     this._list = val;
   }
 
+  async getRepositories() {
+    this.getDataFromApiStore(`/orgs/${ORG}/repos`);
+  }
+
   normalizeApiData(d: RepositoryApi[]): void {
-    throw new Error("Method not implemented.");
+    this.setData(
+      normalizeCollection(
+        d.map((item) => normalizeRepository(item)),
+        (el) => el.id
+      )
+    );
   }
 }
 
