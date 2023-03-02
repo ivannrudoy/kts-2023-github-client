@@ -13,16 +13,13 @@ import { action, computed, makeObservable, observable } from "mobx";
 
 type PrivateFields = "_data" | "_responseState";
 
-abstract class GithubStore<I, O> implements ILocalStore {
+abstract class GithubStore<D, I, O> implements ILocalStore {
   private readonly _apiStorage = new ApiStore(Baseurls.GITHUB);
-  protected _data: CollecionModel<number, O> = {
-    order: [],
-    entities: {},
-  };
+  protected _data: D | undefined;
   protected _responseState: ResponseState = ResponseState.INITIAL;
 
   constructor() {
-    makeObservable<GithubStore<I, O>, PrivateFields>(this, {
+    makeObservable<GithubStore<D, I, O>, PrivateFields>(this, {
       _data: observable.ref,
       _responseState: observable,
       data: computed,
@@ -31,13 +28,9 @@ abstract class GithubStore<I, O> implements ILocalStore {
     });
   }
 
-  get data() {
-    return liniarizeCollection(this._data);
-  }
+  abstract get data(): I;
 
-  setData(d: CollecionModel<number, O>) {
-    this._data = d;
-  }
+  abstract setData(d: D): void;
 
   get responseState(): ResponseState {
     return this._responseState;

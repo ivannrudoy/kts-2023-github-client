@@ -21,7 +21,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
       {repositoriesStore.responseState === ResponseState.LOADING ? (
         "Loading"
       ) : (
-        <List data={repositoriesStore.list} />
+        <List data={repositoriesStore.data} />
       )}
     </div>
   );

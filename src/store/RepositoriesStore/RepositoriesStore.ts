@@ -5,6 +5,7 @@ import {
   RepositoryModel,
 } from "@store/models/Github";
 import {
+  CollecionModel,
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
@@ -12,16 +13,22 @@ import { computed, makeObservable } from "mobx";
 
 const ORG = "ktsstudio";
 
-class RepositoriesStore extends GithubStore<RepositoryApi[], RepositoryModel> {
-  constructor() {
-    super();
-    makeObservable<RepositoriesStore>(this, {
-      list: computed,
-    });
+class RepositoriesStore extends GithubStore<
+  CollecionModel<number, RepositoryApi>,
+  RepositoryApi[],
+  RepositoryModel
+> {
+  protected _data: CollecionModel<number, RepositoryApi> = {
+    order: [],
+    entities: {},
+  };
+
+  get data(): RepositoryApi[] {
+    return liniarizeCollection(this._data);
   }
 
-  get list(): RepositoryModel[] {
-    return liniarizeCollection(this._data);
+  setData(d: CollecionModel<number, RepositoryApi>): void {
+    this._data = d;
   }
 
   async getRepositories() {
