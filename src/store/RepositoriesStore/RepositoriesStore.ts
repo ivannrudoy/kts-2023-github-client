@@ -4,30 +4,24 @@ import {
   RepositoryApi,
   RepositoryModel,
 } from "@store/models/Github";
-import { normalizeCollection } from "@store/models/shared/collection";
-import { action, computed, makeObservable, observable } from "mobx";
+import {
+  liniarizeCollection,
+  normalizeCollection,
+} from "@store/models/shared/collection";
+import { computed, makeObservable } from "mobx";
 
-type PrivateFields = "_list";
 const ORG = "ktsstudio";
 
 class RepositoriesStore extends GithubStore<RepositoryApi[], RepositoryModel> {
-  private _list: RepositoryModel[] = [];
-
   constructor() {
     super();
-    makeObservable<RepositoriesStore, PrivateFields>(this, {
-      _list: observable.ref,
+    makeObservable<RepositoriesStore>(this, {
       list: computed,
-      setList: action,
     });
   }
 
   get list(): RepositoryModel[] {
-    return this._list;
-  }
-
-  setList(val: RepositoryModel[]) {
-    this._list = val;
+    return liniarizeCollection(this._data);
   }
 
   async getRepositories() {

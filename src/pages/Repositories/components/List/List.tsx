@@ -1,19 +1,20 @@
 import * as React from "react";
-import { HTMLAttributes, useEffect } from "react";
+import { HTMLAttributes } from "react";
 
-import { useLocalStore } from "@hooks/useLocalStore";
-import RepositoriesStore from "@store/RepositoriesStore";
+import { RepositoryModel } from "@store/models/Github";
 
-type ListProps = {} & HTMLAttributes<HTMLDivElement>;
+type ListProps = {
+  data: RepositoryModel[];
+} & HTMLAttributes<HTMLDivElement>;
 
-const List: React.FC<ListProps> = () => {
-  const repositoriesStore = useLocalStore(() => new RepositoriesStore());
-
-  useEffect(() => {
-    repositoriesStore.getRepositories();
-  }, [repositoriesStore]);
-
-  return <></>;
+const List: React.FC<ListProps> = ({ data }) => {
+  return (
+    <>
+      {data.map((repository: RepositoryModel) => (
+        <div key={repository.id}>{repository.name}</div>
+      ))}
+    </>
+  );
 };
 
 export type { ListProps };
