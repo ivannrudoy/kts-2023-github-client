@@ -1,17 +1,32 @@
 import * as React from "react";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useCallback } from "react";
 
+import Card from "@components/Card";
 import { RepositoryModel } from "@store/models/Github";
+import { useNavigate } from "react-router-dom";
 
 type ListProps = {
   data: RepositoryModel[];
 } & HTMLAttributes<HTMLDivElement>;
 
 const List: React.FC<ListProps> = ({ data }) => {
+  const navigate = useNavigate();
+
+  const handleOnClick = useCallback(
+    (id: number) => {
+      navigate(`/coin/${id}`);
+    },
+    [navigate]
+  );
+
   return (
     <>
       {data.map((repository: RepositoryModel) => (
-        <div key={repository.id}>{repository.name}</div>
+        <Card
+          key={repository.id}
+          onClick={() => handleOnClick(repository.id)}
+          name={repository.name}
+        />
       ))}
     </>
   );
