@@ -14,7 +14,7 @@ const List: React.FC<ListProps> = ({ data }) => {
 
   const handleOnClick = useCallback(
     (id: number) => {
-      navigate(`/coin/${id}`);
+      navigate(`/repository/${id}`);
     },
     [navigate]
   );
