@@ -3,7 +3,7 @@ import { HTMLAttributes, memo, useEffect } from "react";
 
 import RepositoriesStore from "@store/RepositoriesStore";
 import { ResponseState } from "@utils/ResponseState";
-import { useLocalStore } from "mobx-react-lite";
+import { observer, useLocalStore } from "mobx-react-lite";
 
 import List from "./components/List";
 
@@ -28,4 +28,4 @@ const Repositories: React.FC<RepositoriesProps> = () => {
 };
 
 export type { RepositoriesProps };
-export default memo(Repositories);
+export default observer(Repositories);
