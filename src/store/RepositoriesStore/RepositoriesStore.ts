@@ -1,5 +1,6 @@
 import GithubStore from "@store/GithubStore";
 import {
+  mapRepositoryApiModel,
   normalizeRepository,
   RepositoryApi,
   RepositoryModel,
@@ -9,22 +10,21 @@ import {
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
-import { computed, makeObservable } from "mobx";
 
 const ORG = "ktsstudio";
 
 class RepositoriesStore extends GithubStore<
   CollecionModel<number, RepositoryApi>,
   RepositoryApi[],
-  RepositoryModel
+  RepositoryModel[]
 > {
   protected _data: CollecionModel<number, RepositoryApi> = {
     order: [],
     entities: {},
   };
 
-  get data(): RepositoryApi[] {
-    return liniarizeCollection(this._data);
+  get data(): RepositoryModel[] {
+    return mapRepositoryApiModel(liniarizeCollection(this._data));
   }
 
   setData(d: CollecionModel<number, RepositoryApi>): void {

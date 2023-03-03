@@ -1,5 +1,6 @@
 import GithubStore from "@store/GithubStore";
 import {
+  getInitialRepositoryApi,
   normalizeRepository,
   RepositoryApi,
   RepositoryModel,
@@ -10,17 +11,21 @@ class RepositoryStore extends GithubStore<
   RepositoryApi,
   RepositoryModel
 > {
-  get data(): RepositoryApi {
-    throw new Error("Method not implemented.");
+  protected _data: RepositoryApi = getInitialRepositoryApi();
+
+  get data(): RepositoryModel {
+    return normalizeRepository(this._data);
   }
 
   setData(d: RepositoryApi): void {
-    throw new Error("Method not implemented.");
+    this._data = d;
   }
 
   normalizeApiData(d: RepositoryApi): void {
     this.setData(normalizeRepository(d));
   }
+
+  async getRepository() {}
 }
 
 export default RepositoryStore;

@@ -1,8 +1,4 @@
 import ApiStore from "@store/ApiStore";
-import {
-  CollecionModel,
-  liniarizeCollection,
-} from "@store/models/shared/collection";
 import { Baseurls } from "@utils/Baseurls";
 import { HTTPMethod } from "@utils/HTTPMethod";
 import { ILocalStore } from "@utils/ILocalStore";
@@ -28,7 +24,7 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
     });
   }
 
-  abstract get data(): I;
+  abstract get data(): O;
 
   abstract setData(d: D): void;
 
