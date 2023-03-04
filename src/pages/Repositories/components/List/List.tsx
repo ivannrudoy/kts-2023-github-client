@@ -22,13 +22,21 @@ const List: React.FC<ListProps> = ({ data }) => {
 
   return (
     <div>
-      {data.map((repository: RepositoryModel) => (
-        <Card
-          key={repository.id}
-          onClick={() => handleOnClick(repository.name)}
-          name={repository.name}
-        />
-      ))}
+      <InfiniteScroll
+        next={() => {}}
+        loader={<>Loading</>}
+        dataLength={5}
+        hasMore={false}
+        height={30}
+      >
+        {data.map((repository: RepositoryModel) => (
+          <Card
+            key={repository.id}
+            onClick={() => handleOnClick(repository.name)}
+            name={repository.name}
+          />
+        ))}
+      </InfiniteScroll>
     </div>
   );
 };
