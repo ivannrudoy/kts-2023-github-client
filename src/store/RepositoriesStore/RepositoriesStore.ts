@@ -10,6 +10,7 @@ import {
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
+import { buildEndpoint } from "@utils/urls";
 
 class RepositoriesStore extends GithubStore<
   CollecionModel<number, RepositoryApi>,
@@ -29,8 +30,10 @@ class RepositoriesStore extends GithubStore<
     this._data = d;
   }
 
-  async getRepositories() {
-    this.getDataFromApiStore(`/orgs/${this.ORG}/repos`);
+  async getRepositories(perPage: number, page: number) {
+    this.getDataFromApiStore(
+      buildEndpoint(`/orgs/${this.ORG}/repos`, { per_page: perPage, page })
+    );
   }
 
   normalizeApiData(d: RepositoryApi[]): void {

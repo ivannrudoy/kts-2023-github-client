@@ -11,9 +11,11 @@ type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
 
 const Repositories: React.FC<RepositoriesProps> = () => {
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
+  const perPage = 5;
+  const page = 1;
 
   useEffect(() => {
-    repositoriesStore.getRepositories();
+    repositoriesStore.getRepositories(perPage, page);
   }, [repositoriesStore]);
 
   return (

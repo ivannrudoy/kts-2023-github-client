@@ -3,6 +3,7 @@ import { HTMLAttributes, useCallback } from "react";
 
 import Card from "@components/Card";
 import { RepositoryModel } from "@store/models/Github";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
 
 type ListProps = {
@@ -20,7 +21,7 @@ const List: React.FC<ListProps> = ({ data }) => {
   );
 
   return (
-    <>
+    <div>
       {data.map((repository: RepositoryModel) => (
         <Card
           key={repository.id}
@@ -28,7 +29,7 @@ const List: React.FC<ListProps> = ({ data }) => {
           name={repository.name}
         />
       ))}
-    </>
+    </div>
   );
 };
 
