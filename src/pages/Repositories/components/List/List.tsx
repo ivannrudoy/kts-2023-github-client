@@ -8,9 +8,11 @@ import { useNavigate } from "react-router-dom";
 
 type ListProps = {
   data: RepositoryModel[];
+  handleNext: () => void;
+  count: number;
 } & HTMLAttributes<HTMLDivElement>;
 
-const List: React.FC<ListProps> = ({ data }) => {
+const List: React.FC<ListProps> = ({ data, handleNext, count }) => {
   const navigate = useNavigate();
 
   const handleOnClick = useCallback(
@@ -23,10 +25,10 @@ const List: React.FC<ListProps> = ({ data }) => {
   return (
     <div>
       <InfiniteScroll
-        next={() => {}}
+        next={handleNext}
         loader={<>Loading</>}
-        dataLength={5}
-        hasMore={false}
+        dataLength={count}
+        hasMore={true}
         height={30}
       >
         {data.map((repository: RepositoryModel) => (

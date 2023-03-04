@@ -24,6 +24,7 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
       _responseState: observable,
       data: computed,
       responseState: computed,
+      setResponseState: action,
       setData: action,
     });
   }

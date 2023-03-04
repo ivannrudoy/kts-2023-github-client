@@ -11,7 +11,7 @@ import {
   normalizeCollection,
 } from "@store/models/shared/collection";
 import { buildEndpoint } from "@utils/urls";
-import { action, computed, makeObservable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 
 class RepositoriesStore extends GithubStore<
   CollecionModel<number, RepositoryApi>,
@@ -40,7 +40,12 @@ class RepositoriesStore extends GithubStore<
   }
 
   setData(d: CollecionModel<number, RepositoryApi>): void {
-    this._data = d;
+    if (this.count === 0) {
+      this._data = d;
+    } else {
+      this._data.order = this._data.order.concat(d.order);
+      this._data.entities = { ...this._data.entities, ...d.entities };
+    }
   }
 
   async getRepositories(perPage: number, page: number) {

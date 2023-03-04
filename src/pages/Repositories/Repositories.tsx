@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HTMLAttributes, memo, useEffect, useState } from "react";
+import { HTMLAttributes, useCallback, useEffect, useState } from "react";
 
 import RepositoriesStore from "@store/RepositoriesStore";
 import { ResponseState } from "@utils/ResponseState";
@@ -9,10 +9,19 @@ import List from "./components/List";
 
 type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
 
+/**
+ * @TODO Add loader
+ */
 const Repositories: React.FC<RepositoriesProps> = () => {
   const [page, setPage] = useState<number>(1);
+
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
+
   const perPage = 5;
+
+  const handleNext = useCallback(() => {
+    setPage(page + 1);
+  }, [page]);
 
   useEffect(() => {
     repositoriesStore.getRepositories(perPage, page);
@@ -20,10 +29,14 @@ const Repositories: React.FC<RepositoriesProps> = () => {
 
   return (
     <div>
-      {repositoriesStore.responseState === ResponseState.LOADING ? (
+      {repositoriesStore.responseState !== ResponseState.SUCCESS ? (
         "Loading"
       ) : (
-        <List data={repositoriesStore.data} />
+        <List
+          handleNext={handleNext}
+          data={repositoriesStore.data}
+          count={repositoriesStore.data.length}
+        />
       )}
     </div>
   );
