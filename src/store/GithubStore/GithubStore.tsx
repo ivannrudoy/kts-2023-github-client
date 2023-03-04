@@ -9,6 +9,9 @@ import { action, computed, makeObservable, observable } from "mobx";
 
 type PrivateFields = "_data" | "_responseState";
 
+/**
+ * @TODO Add headers schema
+ */
 abstract class GithubStore<D, I, O> implements ILocalStore {
   private readonly _apiStorage = new ApiStore(Baseurls.GITHUB);
   protected _data: D | undefined;
@@ -37,12 +40,13 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
     this._responseState = state;
   }
 
-  protected async getDataFromApiStore(endpoint: string) {
+  protected async getDataFromApiStore(endpoint: string, headers?: {}) {
     this.setResponseState(ResponseState.INITIAL);
 
     let response: AxiosPromise<I> = await this._apiStorage.request(
       HTTPMethod.GET,
-      endpoint
+      endpoint,
+      headers
     );
 
     if ((await response).status === ResponseCode.OK) {

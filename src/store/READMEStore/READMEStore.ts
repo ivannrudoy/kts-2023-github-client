@@ -6,11 +6,11 @@ import {
   ReadmeModel,
 } from "@store/models/Github";
 
-/**
- * @TODO Add html content
- */
 class READMEStore extends GithubStore<ReadmeApi, ReadmeApi, ReadmeModel> {
   protected _data: ReadmeApi = getInitialReadmeApi();
+  protected _headers = {
+    Accept: "application/vnd.github.v3.html",
+  };
 
   get data(): ReadmeModel {
     return normalizeReadme(this._data);
@@ -25,7 +25,10 @@ class READMEStore extends GithubStore<ReadmeApi, ReadmeApi, ReadmeModel> {
   }
 
   async getReadme(name: string) {
-    this.getDataFromApiStore(`/repos/${this.ORG}/${name}/readme`);
+    this.getDataFromApiStore(
+      `/repos/${this.ORG}/${name}/readme`,
+      this._headers
+    );
   }
 }
 
