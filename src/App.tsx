@@ -15,7 +15,7 @@ function App() {
         <Route path={Endpoints.ROOT} element={<Repositories />} />
         <Route index element={<Repositories />} />
         <Route path="/repository">
-          <Route path=":id" element={<Repository />} />
+          <Route path=":name" element={<Repository />} />
         </Route>
       </Routes>
     </div>

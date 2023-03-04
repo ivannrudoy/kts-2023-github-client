@@ -11,8 +11,6 @@ import {
   normalizeCollection,
 } from "@store/models/shared/collection";
 
-const ORG = "ktsstudio";
-
 class RepositoriesStore extends GithubStore<
   CollecionModel<number, RepositoryApi>,
   RepositoryApi[],
@@ -32,7 +30,7 @@ class RepositoriesStore extends GithubStore<
   }
 
   async getRepositories() {
-    this.getDataFromApiStore(`/orgs/${ORG}/repos`);
+    this.getDataFromApiStore(`/orgs/${this.ORG}/repos`);
   }
 
   normalizeApiData(d: RepositoryApi[]): void {

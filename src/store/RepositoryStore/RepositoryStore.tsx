@@ -25,7 +25,9 @@ class RepositoryStore extends GithubStore<
     this.setData(normalizeRepository(d));
   }
 
-  async getRepository() {}
+  async getRepository(name: string) {
+    this.getDataFromApiStore(`/repos/${this.ORG}/${name}`);
+  }
 }
 
 export default RepositoryStore;

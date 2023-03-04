@@ -13,6 +13,7 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
   private readonly _apiStorage = new ApiStore(Baseurls.GITHUB);
   protected _data: D | undefined;
   protected _responseState: ResponseState = ResponseState.INITIAL;
+  ORG = "ktsstudio";
 
   constructor() {
     makeObservable<GithubStore<D, I, O>, PrivateFields>(this, {

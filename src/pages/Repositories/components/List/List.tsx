@@ -13,8 +13,8 @@ const List: React.FC<ListProps> = ({ data }) => {
   const navigate = useNavigate();
 
   const handleOnClick = useCallback(
-    (id: number) => {
-      navigate(`/repository/${id}`);
+    (name: string) => {
+      navigate(`/repository/${name}`);
     },
     [navigate]
   );
@@ -24,7 +24,7 @@ const List: React.FC<ListProps> = ({ data }) => {
       {data.map((repository: RepositoryModel) => (
         <Card
           key={repository.id}
-          onClick={() => handleOnClick(repository.id)}
+          onClick={() => handleOnClick(repository.name)}
           name={repository.name}
         />
       ))}
