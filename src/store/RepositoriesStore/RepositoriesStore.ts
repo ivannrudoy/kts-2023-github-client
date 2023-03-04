@@ -11,6 +11,7 @@ import {
   normalizeCollection,
 } from "@store/models/shared/collection";
 import { buildEndpoint } from "@utils/urls";
+import { action, computed, makeObservable } from "mobx";
 
 class RepositoriesStore extends GithubStore<
   CollecionModel<number, RepositoryApi>,
@@ -22,8 +23,20 @@ class RepositoriesStore extends GithubStore<
     entities: {},
   };
 
+  constructor() {
+    super();
+
+    makeObservable<RepositoriesStore>(this, {
+      count: computed,
+    });
+  }
+
   get data(): RepositoryModel[] {
     return mapRepositoryApiModel(liniarizeCollection(this._data));
+  }
+
+  get count(): number {
+    return this._data.order.length;
   }
 
   setData(d: CollecionModel<number, RepositoryApi>): void {
