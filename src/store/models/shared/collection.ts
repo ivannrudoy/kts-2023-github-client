@@ -24,3 +24,13 @@ export const normalizeCollection = <K extends string | number, T>(
 export const liniarizeCollection = <K extends string | number, T>(
   elements: CollecionModel<K, T>
 ): T[] => elements.order.map((el) => elements.entities[el]);
+
+export const concatCollections = <K extends string | number, T>(
+  coll1: CollecionModel<K, T>,
+  coll2: CollecionModel<K, T>
+): CollecionModel<K, T> => {
+  return {
+    order: coll1.order.concat(coll2.order),
+    entities: { ...coll1.entities, ...coll2.entities },
+  };
+};

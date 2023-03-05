@@ -7,11 +7,12 @@ import {
 } from "@store/models/Github";
 import {
   CollecionModel,
+  concatCollections,
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
 import { buildEndpoint } from "@utils/urls";
-import { computed, makeObservable, observable } from "mobx";
+import { makeObservable } from "mobx";
 
 class RepositoriesStore extends GithubStore<
   CollecionModel<number, RepositoryApi>,
@@ -26,25 +27,18 @@ class RepositoriesStore extends GithubStore<
   constructor() {
     super();
 
-    makeObservable<RepositoriesStore>(this, {
-      count: computed,
-    });
+    makeObservable<RepositoriesStore>(this, {});
   }
 
   get data(): RepositoryModel[] {
     return mapRepositoryApiModel(liniarizeCollection(this._data));
   }
 
-  get count(): number {
-    return this._data.order.length;
-  }
-
   setData(d: CollecionModel<number, RepositoryApi>): void {
-    if (this.count === 0) {
+    if (this.data.length === 0) {
       this._data = d;
     } else {
-      this._data.order = this._data.order.concat(d.order);
-      this._data.entities = { ...this._data.entities, ...d.entities };
+      concatCollections(this._data, d);
     }
   }
 

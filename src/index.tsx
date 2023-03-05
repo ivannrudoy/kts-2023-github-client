@@ -12,6 +12,8 @@ const container = document.getElementById(rootId) as HTMLElement;
 const root = ReactDOM.createRoot(container);
 
 root.render(
+  // @NOTE: Remounts the components twice on load, useeffects runs x2 in strict mode!
+  // @NOTE: Remove on production
   <React.StrictMode>
     <HashRouter>
       <App />

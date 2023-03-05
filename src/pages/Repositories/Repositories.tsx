@@ -13,7 +13,7 @@ type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
  * @TODO Add loader
  */
 const Repositories: React.FC<RepositoriesProps> = () => {
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState(1);
 
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
 
