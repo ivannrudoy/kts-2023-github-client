@@ -1,31 +1,62 @@
 import GithubStore from "@store/GithubStore";
 import {
+  mapRepositoryApiModel,
   normalizeRepository,
   RepositoryApi,
   RepositoryModel,
 } from "@store/models/Github";
 import {
+  CollecionModel,
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
-import { computed, makeObservable } from "mobx";
+import { buildEndpoint } from "@utils/urls";
+import { makeObservable } from "mobx";
 
-const ORG = "ktsstudio";
+class RepositoriesStore extends GithubStore<
+  CollecionModel<number, RepositoryApi>,
+  RepositoryApi[],
+  RepositoryModel[]
+> {
+  protected _data: CollecionModel<number, RepositoryApi> = {
+    order: [],
+    entities: {},
+  };
 
-class RepositoriesStore extends GithubStore<RepositoryApi[], RepositoryModel> {
   constructor() {
     super();
-    makeObservable<RepositoriesStore>(this, {
-      list: computed,
-    });
+
+    makeObservable<RepositoriesStore>(this, {});
   }
 
-  get list(): RepositoryModel[] {
-    return liniarizeCollection(this._data);
+  get data(): RepositoryModel[] {
+    return mapRepositoryApiModel(liniarizeCollection(this._data));
   }
 
-  async getRepositories() {
-    this.getDataFromApiStore(`/orgs/${ORG}/repos`);
+  setData(d: CollecionModel<number, RepositoryApi>): void {
+    if (this.data.length === 0) {
+      this._data = d;
+    } else {
+      this._data.order = this._data.order.concat(d.order);
+      this._data.entities = { ...this._data.entities, ...d.entities };
+    }
+  }
+
+  async getRepositories(perPage: number, page: number) {
+    if (this.data.length === 0 && page > 1) {
+      for (let c = 2; c <= page; c++) {
+        this.getDataFromApiStore(
+          buildEndpoint(`/orgs/${this.ORG}/repos`, {
+            per_page: perPage,
+            page: c,
+          })
+        );
+      }
+    } else {
+      this.getDataFromApiStore(
+        buildEndpoint(`/orgs/${this.ORG}/repos`, { per_page: perPage, page })
+      );
+    }
   }
 
   normalizeApiData(d: RepositoryApi[]): void {

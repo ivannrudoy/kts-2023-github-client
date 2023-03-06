@@ -1,31 +1,52 @@
 import * as React from "react";
-import { HTMLAttributes, memo, useEffect } from "react";
+import { HTMLAttributes, useCallback, useEffect, useState } from "react";
 
 import RepositoriesStore from "@store/RepositoriesStore";
+import rootStore from "@store/RootStore";
 import { ResponseState } from "@utils/ResponseState";
-import { useLocalStore } from "mobx-react-lite";
+import { observer, useLocalStore } from "mobx-react-lite";
+import { useSearchParams } from "react-router-dom";
 
 import List from "./components/List";
 
 type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
 
+/**
+ * @TODO Add loader
+ */
 const Repositories: React.FC<RepositoriesProps> = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
+  const queryStore = rootStore.query;
+
+  const perPage = 5;
+
+  const handleNext = useCallback(() => {
+    const p = queryStore.page + 1;
+    setSearchParams(
+      queryStore.changeSearchParam(searchParams, "page", p.toString())
+    );
+  }, [queryStore, setSearchParams, searchParams]);
 
   useEffect(() => {
-    repositoriesStore.getRepositories();
-  }, [repositoriesStore]);
+    repositoriesStore.getRepositories(perPage, queryStore.page);
+  }, [queryStore.page, repositoriesStore]);
 
   return (
     <div>
-      {repositoriesStore.responseState === ResponseState.LOADING ? (
+      {repositoriesStore.responseState !== ResponseState.SUCCESS ? (
         "Loading"
       ) : (
-        <List data={repositoriesStore.list} />
+        <List
+          handleNext={handleNext}
+          data={repositoriesStore.data}
+          count={repositoriesStore.data.length}
+        />
       )}
     </div>
   );
 };
 
 export type { RepositoriesProps };
-export default memo(Repositories);
+export default observer(Repositories);
