@@ -29,7 +29,7 @@ const List: React.FC<ListProps> = ({ data, handleNext, count }) => {
         loader={<>Loading</>}
         dataLength={count}
         hasMore={true}
-        height={30}
+        height={50}
       >
         {data.map((repository: RepositoryModel) => (
           <Card
