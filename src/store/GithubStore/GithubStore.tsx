@@ -1,8 +1,4 @@
 import ApiStore from "@store/ApiStore";
-import {
-  CollecionModel,
-  liniarizeCollection,
-} from "@store/models/shared/collection";
 import { Baseurls } from "@utils/Baseurls";
 import { HTTPMethod } from "@utils/HTTPMethod";
 import { ILocalStore } from "@utils/ILocalStore";
@@ -13,31 +9,29 @@ import { action, computed, makeObservable, observable } from "mobx";
 
 type PrivateFields = "_data" | "_responseState";
 
-abstract class GithubStore<I, O> implements ILocalStore {
+/**
+ * @TODO Add headers schema
+ */
+abstract class GithubStore<D, I, O> implements ILocalStore {
   private readonly _apiStorage = new ApiStore(Baseurls.GITHUB);
-  protected _data: CollecionModel<number, O> = {
-    order: [],
-    entities: {},
-  };
+  protected _data: D | undefined;
   protected _responseState: ResponseState = ResponseState.INITIAL;
+  ORG = "ktsstudio";
 
   constructor() {
-    makeObservable<GithubStore<I, O>, PrivateFields>(this, {
+    makeObservable<GithubStore<D, I, O>, PrivateFields>(this, {
       _data: observable.ref,
       _responseState: observable,
       data: computed,
       responseState: computed,
+      setResponseState: action,
       setData: action,
     });
   }
 
-  get data() {
-    return liniarizeCollection(this._data);
-  }
+  abstract get data(): O;
 
-  setData(d: CollecionModel<number, O>) {
-    this._data = d;
-  }
+  abstract setData(d: D): void;
 
   get responseState(): ResponseState {
     return this._responseState;
@@ -47,12 +41,13 @@ abstract class GithubStore<I, O> implements ILocalStore {
     this._responseState = state;
   }
 
-  protected async getDataFromApiStore(endpoint: string) {
+  protected async getDataFromApiStore(endpoint: string, headers?: {}) {
     this.setResponseState(ResponseState.INITIAL);
 
     let response: AxiosPromise<I> = await this._apiStorage.request(
       HTTPMethod.GET,
-      endpoint
+      endpoint,
+      headers
     );
 
     if ((await response).status === ResponseCode.OK) {

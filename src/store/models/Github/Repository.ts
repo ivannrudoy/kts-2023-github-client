@@ -12,6 +12,13 @@ type RepositoryModel = {
   updated_at: string;
 };
 
+const getInitialRepositoryApi = (): RepositoryApi => ({
+  id: -1,
+  name: "",
+  stargazers_count: -1,
+  updated_at: "",
+});
+
 const normalizeRepository = (from: RepositoryApi): RepositoryModel => {
   return {
     id: from.id,
@@ -21,4 +28,14 @@ const normalizeRepository = (from: RepositoryApi): RepositoryModel => {
   };
 };
 
-export { RepositoryApi, RepositoryModel, normalizeRepository };
+const mapRepositoryApiModel = (from: RepositoryApi[]): RepositoryModel[] => {
+  return from.map((el) => normalizeRepository(el));
+};
+
+export {
+  RepositoryApi,
+  RepositoryModel,
+  getInitialRepositoryApi,
+  normalizeRepository,
+  mapRepositoryApiModel,
+};
