@@ -7,7 +7,6 @@ import {
 } from "@store/models/Github";
 import {
   CollecionModel,
-  concatCollections,
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
