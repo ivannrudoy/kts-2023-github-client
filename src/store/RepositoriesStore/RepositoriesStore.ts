@@ -55,19 +55,21 @@ class RepositoriesStore extends GithubStore<
   }
 
   async getRepositories(perPage: number, page: number, name: string) {
-    if (this.data.length === 0 && page > 1) {
-      for (let c = 2; c <= page; c++) {
+    if (page !== -1 && name !== "") {
+      if (this.data.length === 0 && page > 1) {
+        for (let c = 2; c <= page; c++) {
+          this.getDataFromApiStore(
+            buildEndpoint(`/orgs/${name}/repos`, {
+              per_page: perPage,
+              page: c,
+            })
+          );
+        }
+      } else {
         this.getDataFromApiStore(
-          buildEndpoint(`/orgs/${name}/repos`, {
-            per_page: perPage,
-            page: c,
-          })
+          buildEndpoint(`/orgs/${name}/repos`, { per_page: perPage, page })
         );
       }
-    } else {
-      this.getDataFromApiStore(
-        buildEndpoint(`/orgs/${name}/repos`, { per_page: perPage, page })
-      );
     }
   }
 

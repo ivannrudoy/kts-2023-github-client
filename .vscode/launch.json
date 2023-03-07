@@ -13,6 +13,10 @@
       "webRoot": "${workspaceFolder}",
       "pathMappings": [
         {
+          "url": "webpack://kts-2023-github-client/src/store",
+          "path": "${workspaceFolder}/src/store"
+        },
+        {
           "url": "webpack://kts-2023-github-client/src/pages",
           "path": "${workspaceFolder}/src/pages"
         }

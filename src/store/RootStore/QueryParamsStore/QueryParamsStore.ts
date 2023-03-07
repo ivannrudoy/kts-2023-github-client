@@ -33,14 +33,14 @@ class QueryParamsStore {
 
   get name(): string {
     const a = this.params["name"];
-    const n = a ?? "ktsstudio";
+    const n = a ?? "";
     return `${n}`;
   }
 
   get page(): number {
     const a = this.params["page"];
     const p = parseInt(`${a}` ?? 1);
-    return isNaN(p) ? 1 : p;
+    return isNaN(p) ? -1 : p;
   }
 
   setSearch(search: string) {
