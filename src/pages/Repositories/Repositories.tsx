@@ -72,22 +72,22 @@ const Repositories: React.FC<RepositoriesProps> = () => {
 
   return (
     <div>
-      {repositoriesStore.responseState !== ResponseState.SUCCESS ? (
-        "Loading"
-      ) : (
-        <>
-          <Name
-            handleNameClick={handleNameClick}
-            handleNameInput={handleNameInput}
-            value={inputValue ?? queryStore.name}
-          />
+      <>
+        <Name
+          handleNameClick={handleNameClick}
+          handleNameInput={handleNameInput}
+          value={inputValue ?? queryStore.name}
+        />
+        {repositoriesStore.responseState !== ResponseState.SUCCESS ? (
+          "Loading"
+        ) : (
           <List
             handleNext={handleNext}
             data={repositoriesStore.data}
             count={repositoriesStore.data.length}
           />
-        </>
-      )}
+        )}
+      </>
     </div>
   );
 };
