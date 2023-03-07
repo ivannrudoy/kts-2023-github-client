@@ -36,14 +36,16 @@ const Repositories: React.FC<RepositoriesProps> = () => {
     );
   }, [queryStore, setSearchParams, searchParams]);
   const handleNameClick = useCallback(() => {
-    repositoriesStore.resetData();
+    if (typeof inputValue !== "undefined" && inputValue !== queryStore.name) {
+      repositoriesStore.resetData();
+    }
     const sp = searchParams;
     queryStore.changeSearchParam(sp, "name", inputValue ?? queryStore.name);
     setSearchParams(
       queryStore.changeSearchParam(
         sp,
         "page",
-        inputValue === queryStore.name ? `${queryStore.page}` : "1"
+        typeof inputValue === "undefined" ? `${queryStore.page}` : "1"
       )
     );
   }, [
