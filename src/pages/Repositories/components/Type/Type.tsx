@@ -4,10 +4,19 @@ import MultiDropdown from "@components/Multidropdown/MultiDropdown";
 
 type TypeProps = {} & HTMLAttributes<HTMLDivElement>;
 
+const REPOSITORIES_TYPES = [
+  "all",
+  "public",
+  "private",
+  "forks",
+  "sources",
+  "member",
+];
+
 const Type: FC<TypeProps> = () => {
   return (
     <div>
-      <MultiDropdown />
+      <MultiDropdown data={REPOSITORIES_TYPES} />
     </div>
   );
 };
