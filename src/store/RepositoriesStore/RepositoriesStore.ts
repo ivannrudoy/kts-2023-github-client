@@ -7,11 +7,12 @@ import {
 } from "@store/models/Github";
 import {
   CollecionModel,
+  getInitialCollectionModel,
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
 import { buildEndpoint } from "@utils/urls";
-import { makeObservable } from "mobx";
+import { action, makeObservable } from "mobx";
 
 class RepositoriesStore extends GithubStore<
   CollecionModel<number, RepositoryApi>,
@@ -22,14 +23,18 @@ class RepositoriesStore extends GithubStore<
     order: [],
     entities: {},
   };
+  private prevName = "";
 
   constructor() {
     super();
 
-    makeObservable<RepositoriesStore>(this, {});
+    makeObservable<RepositoriesStore>(this, {
+      resetData: action,
+    });
   }
 
   get data(): RepositoryModel[] {
+    // @TODO Filter here
     return mapRepositoryApiModel(liniarizeCollection(this._data));
   }
 
@@ -42,11 +47,18 @@ class RepositoriesStore extends GithubStore<
     }
   }
 
-  async getRepositories(perPage: number, page: number) {
+  resetData() {
+    this._data = {
+      order: [],
+      entities: {},
+    };
+  }
+
+  async getRepositories(perPage: number, page: number, name: string) {
     if (this.data.length === 0 && page > 1) {
       for (let c = 2; c <= page; c++) {
         this.getDataFromApiStore(
-          buildEndpoint(`/orgs/${this.ORG}/repos`, {
+          buildEndpoint(`/orgs/${name}/repos`, {
             per_page: perPage,
             page: c,
           })
@@ -54,7 +66,7 @@ class RepositoriesStore extends GithubStore<
       }
     } else {
       this.getDataFromApiStore(
-        buildEndpoint(`/orgs/${this.ORG}/repos`, { per_page: perPage, page })
+        buildEndpoint(`/orgs/${name}/repos`, { per_page: perPage, page })
       );
     }
   }

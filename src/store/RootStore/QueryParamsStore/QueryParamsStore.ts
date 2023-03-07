@@ -10,10 +10,10 @@ class QueryParamsStore {
   constructor() {
     makeObservable<QueryParamsStore, PrivateFields>(this, {
       _params: observable.ref,
-      // stringifiedParam: computed,
-      page: computed,
       params: computed,
       setSearch: action,
+      page: computed,
+      name: computed,
     });
   }
 
@@ -26,9 +26,15 @@ class QueryParamsStore {
     name: string,
     value: string
   ): URLSearchParams {
-    return new URLSearchParams({
-      [`${name}`]: value,
-    });
+    searchParams.delete(name);
+    searchParams.append(name, value);
+    return searchParams;
+  }
+
+  get name(): string {
+    const a = this.params["name"];
+    const n = a ?? "ktsstudio";
+    return `${n}`;
   }
 
   get page(): number {

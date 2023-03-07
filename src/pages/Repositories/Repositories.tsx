@@ -1,5 +1,11 @@
 import * as React from "react";
-import { HTMLAttributes, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  HTMLAttributes,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 import RepositoriesStore from "@store/RepositoriesStore";
 import rootStore from "@store/RootStore";
@@ -16,8 +22,8 @@ type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
  * @TODO Add loader
  */
 const Repositories: React.FC<RepositoriesProps> = () => {
+  const [inputValue, setInputValue] = useState<string>();
   const [searchParams, setSearchParams] = useSearchParams();
-
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
   const queryStore = rootStore.query;
 
@@ -29,10 +35,38 @@ const Repositories: React.FC<RepositoriesProps> = () => {
       queryStore.changeSearchParam(searchParams, "page", p.toString())
     );
   }, [queryStore, setSearchParams, searchParams]);
+  const handleNameClick = useCallback(() => {
+    repositoriesStore.resetData();
+    const sp = searchParams;
+    queryStore.changeSearchParam(sp, "name", inputValue ?? queryStore.name);
+    setSearchParams(
+      queryStore.changeSearchParam(
+        sp,
+        "page",
+        inputValue === queryStore.name ? `${queryStore.page}` : "1"
+      )
+    );
+  }, [
+    repositoriesStore,
+    queryStore,
+    setSearchParams,
+    searchParams,
+    inputValue,
+  ]);
+  const handleNameInput = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
+      setInputValue(ev.target.value ?? queryStore.name);
+    },
+    [queryStore]
+  );
 
   useEffect(() => {
-    repositoriesStore.getRepositories(perPage, queryStore.page);
-  }, [queryStore.page, repositoriesStore]);
+    repositoriesStore.getRepositories(
+      perPage,
+      queryStore.page,
+      queryStore.name
+    );
+  }, [queryStore.page, queryStore.name, repositoriesStore]);
 
   return (
     <div>
@@ -40,7 +74,11 @@ const Repositories: React.FC<RepositoriesProps> = () => {
         "Loading"
       ) : (
         <>
-          <Name />
+          <Name
+            handleNameClick={handleNameClick}
+            handleNameInput={handleNameInput}
+            value={inputValue ?? queryStore.name}
+          />
           <List
             handleNext={handleNext}
             data={repositoriesStore.data}
