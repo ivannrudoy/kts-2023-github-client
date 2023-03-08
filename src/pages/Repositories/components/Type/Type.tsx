@@ -1,8 +1,10 @@
-import React, { FC, HTMLAttributes } from "react";
+import React, { MouseEvent, FC, HTMLAttributes } from "react";
 
 import Dropdown from "@components/Dropdown/Dropdown";
 
-type TypeProps = {} & HTMLAttributes<HTMLDivElement>;
+type TypeProps = {
+  handleTypeClick: (ev: MouseEvent) => void;
+} & HTMLAttributes<HTMLDivElement>;
 
 const REPOSITORIES_TYPES = [
   "all",
@@ -13,11 +15,10 @@ const REPOSITORIES_TYPES = [
   "member",
 ];
 
-const Type: FC<TypeProps> = () => {
-  const handleItemClick = () => {};
+const Type: FC<TypeProps> = ({ handleTypeClick }) => {
   return (
     <div>
-      <Dropdown handleItemClick={handleItemClick} data={REPOSITORIES_TYPES} />
+      <Dropdown handleItemClick={handleTypeClick} data={REPOSITORIES_TYPES} />
     </div>
   );
 };

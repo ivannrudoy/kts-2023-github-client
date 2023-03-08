@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  MouseEvent,
   ChangeEvent,
   HTMLAttributes,
   useCallback,
@@ -24,6 +25,7 @@ type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
  */
 const Repositories: React.FC<RepositoriesProps> = () => {
   const [inputValue, setInputValue] = useState<string>();
+  const [typeValue, setTypeValue] = useState<string>();
   const [searchParams, setSearchParams] = useSearchParams();
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
   const queryStore = rootStore.query;
@@ -62,6 +64,11 @@ const Repositories: React.FC<RepositoriesProps> = () => {
     },
     [queryStore]
   );
+  const handleTypeClick = useCallback((ev: MouseEvent) => {
+    const item = ev.target as HTMLDivElement;
+    const value = item.dataset.value;
+    setTypeValue(value);
+  }, []);
 
   useEffect(() => {
     repositoriesStore.getRepositories(
@@ -82,7 +89,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
         />
         <div>
           <>Repositories</>
-          <Type />
+          <Type handleTypeClick={handleTypeClick} />
         </div>
         {repositoriesStore.responseState !== ResponseState.SUCCESS ? (
           "Loading"
