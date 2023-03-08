@@ -66,6 +66,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
   );
   const handleTypeClick = useCallback(
     (ev: MouseEvent) => {
+      repositoriesStore.resetData();
       const item = ev.target as HTMLDivElement;
       const value = item.dataset.value ?? "";
       setSearchParams(

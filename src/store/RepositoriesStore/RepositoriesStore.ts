@@ -66,12 +66,17 @@ class RepositoriesStore extends GithubStore<
             buildEndpoint(`/orgs/${name}/repos`, {
               per_page: perPage,
               page: c,
+              type,
             })
           );
         }
       } else {
         this.getDataFromApiStore(
-          buildEndpoint(`/orgs/${name}/repos`, { per_page: perPage, page })
+          buildEndpoint(`/orgs/${name}/repos`, {
+            per_page: perPage,
+            page,
+            type,
+          })
         );
       }
     }
