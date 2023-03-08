@@ -14,7 +14,7 @@ type NameProps = {
 const Name: FC<NameProps> = ({ handleNameInput, handleNameClick, value }) => {
   return (
     <div className={styles["repositories__name"]}>
-      <Input value={value} onChange={handleNameInput} />
+      <Input className="input" value={value} onChange={handleNameInput} />
       <Button onClick={handleNameClick} />
     </div>
   );
