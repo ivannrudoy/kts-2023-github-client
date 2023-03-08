@@ -79,9 +79,10 @@ const Repositories: React.FC<RepositoriesProps> = () => {
     repositoriesStore.getRepositories(
       perPage,
       queryStore.page,
-      queryStore.name
+      queryStore.name,
+      queryStore.type
     );
-  }, [queryStore.page, queryStore.name, repositoriesStore]);
+  }, [queryStore.page, queryStore.name, queryStore.type, repositoriesStore]);
 
   // @TODO: Move to view
   return (

@@ -53,7 +53,12 @@ class RepositoriesStore extends GithubStore<
     };
   }
 
-  async getRepositories(perPage: number, page: number, name: string) {
+  async getRepositories(
+    perPage: number,
+    page: number,
+    name: string,
+    type: string
+  ) {
     if (page !== -1 && name !== "") {
       if (this.data.length === 0 && page > 1) {
         for (let c = 2; c <= page; c++) {
