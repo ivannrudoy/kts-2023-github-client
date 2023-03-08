@@ -1,6 +1,6 @@
 import React, { FC, HTMLAttributes } from "react";
 
-import Dropdown from "@components/Multidropdown/Dropdown";
+import Dropdown from "@components/Dropdown/Dropdown";
 
 type TypeProps = {} & HTMLAttributes<HTMLDivElement>;
 
@@ -14,9 +14,10 @@ const REPOSITORIES_TYPES = [
 ];
 
 const Type: FC<TypeProps> = () => {
+  const handleItemClick = () => {};
   return (
     <div>
-      <Dropdown data={REPOSITORIES_TYPES} />
+      <Dropdown handleItemClick={handleItemClick} data={REPOSITORIES_TYPES} />
     </div>
   );
 };

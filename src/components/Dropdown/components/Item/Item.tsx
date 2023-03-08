@@ -5,7 +5,7 @@ type ItemProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 export const Item: FC<ItemProps> = ({ value }) => {
-  return <div data-value={value}>value</div>;
+  return <div data-value={value}>{value}</div>;
 };
 
 export default Item;

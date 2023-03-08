@@ -4,6 +4,7 @@ import Input from "./components/Input";
 import List from "./components/List";
 
 type DropownProps = HTMLAttributes<HTMLDivElement> & {
+  handleItemClick: () => void;
   data: string[];
 };
 
