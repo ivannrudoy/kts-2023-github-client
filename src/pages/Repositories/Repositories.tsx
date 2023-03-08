@@ -73,7 +73,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
         queryStore.changeSearchParam(searchParams, "type", value)
       );
     },
-    [queryStore, searchParams, setSearchParams]
+    [queryStore, repositoriesStore, searchParams, setSearchParams]
   );
 
   useEffect(() => {
