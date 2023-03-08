@@ -3,11 +3,11 @@ import React, { FC, HTMLAttributes } from "react";
 import Input from "./components/Input";
 import List from "./components/List";
 
-type MultiDropownProps = HTMLAttributes<HTMLDivElement> & {
+type DropownProps = HTMLAttributes<HTMLDivElement> & {
   data: string[];
 };
 
-export const MultiDropdown: FC<MultiDropownProps> = ({ data }) => {
+export const Dropdown: FC<DropownProps> = ({ data }) => {
   return (
     <div>
       <Input onClick={() => {}} value={""} />
@@ -16,5 +16,5 @@ export const MultiDropdown: FC<MultiDropownProps> = ({ data }) => {
   );
 };
 
-export default MultiDropdown;
-export { MultiDropownProps };
+export default Dropdown;
+export { DropownProps };

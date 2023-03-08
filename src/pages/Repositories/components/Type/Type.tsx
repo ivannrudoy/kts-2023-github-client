@@ -1,6 +1,6 @@
 import React, { FC, HTMLAttributes } from "react";
 
-import MultiDropdown from "@components/Multidropdown/MultiDropdown";
+import Dropdown from "@components/Multidropdown/Dropdown";
 
 type TypeProps = {} & HTMLAttributes<HTMLDivElement>;
 
@@ -16,7 +16,7 @@ const REPOSITORIES_TYPES = [
 const Type: FC<TypeProps> = () => {
   return (
     <div>
-      <MultiDropdown data={REPOSITORIES_TYPES} />
+      <Dropdown data={REPOSITORIES_TYPES} />
     </div>
   );
 };
