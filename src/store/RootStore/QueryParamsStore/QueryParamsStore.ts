@@ -43,6 +43,12 @@ class QueryParamsStore {
     return isNaN(p) ? -1 : p;
   }
 
+  get type(): string {
+    const a = this.params["type"];
+    const n = a ?? "";
+    return `${n}`;
+  }
+
   setSearch(search: string) {
     search = search.startsWith("?") ? search.slice(1) : search;
     if (this._search !== search) {

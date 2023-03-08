@@ -64,11 +64,16 @@ const Repositories: React.FC<RepositoriesProps> = () => {
     },
     [queryStore]
   );
-  const handleTypeClick = useCallback((ev: MouseEvent) => {
-    const item = ev.target as HTMLDivElement;
-    const value = item.dataset.value;
-    setTypeValue(value);
-  }, []);
+  const handleTypeClick = useCallback(
+    (ev: MouseEvent) => {
+      const item = ev.target as HTMLDivElement;
+      const value = item.dataset.value ?? "";
+      setSearchParams(
+        queryStore.changeSearchParam(searchParams, "type", value)
+      );
+    },
+    [queryStore, searchParams, setSearchParams]
+  );
 
   useEffect(() => {
     repositoriesStore.getRepositories(
