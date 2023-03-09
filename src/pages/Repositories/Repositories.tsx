@@ -17,6 +17,7 @@ import { useSearchParams } from "react-router-dom";
 import List from "./components/List";
 import Name from "./components/Name";
 import Type from "./components/Type";
+import styles from "./Repositories.module.scss";
 
 type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
 
@@ -88,16 +89,18 @@ const Repositories: React.FC<RepositoriesProps> = () => {
   // @TODO: Move to view
   return (
     <div>
-      <>
+      <header>
         <Name
           handleNameClick={handleNameClick}
           handleNameInput={handleNameInput}
           value={inputValue ?? queryStore.name}
         />
-        <div>
-          <>Repositories</>
+        <div className={styles["header__bottom"]}>
+          <div>Repositories</div>
           <Type handleTypeClick={handleTypeClick} />
         </div>
+      </header>
+      <main>
         {repositoriesStore.responseState !== ResponseState.SUCCESS ? (
           "Loading"
         ) : (
@@ -107,7 +110,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
             count={repositoriesStore.data.length}
           />
         )}
-      </>
+      </main>
     </div>
   );
 };
