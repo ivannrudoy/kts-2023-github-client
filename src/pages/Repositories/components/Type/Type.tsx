@@ -21,9 +21,10 @@ const Type: FC<TypeProps> = ({ handleTypeClick }) => {
   return (
     <div>
       <Dropdown
-        className={styles["repositories__type"]}
+        className={styles["header__type"]}
         handleItemClick={handleTypeClick}
         data={REPOSITORIES_TYPES}
+        placeholder="Type"
       />
     </div>
   );

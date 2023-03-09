@@ -95,7 +95,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
           value={inputValue ?? queryStore.name}
         />
         <div className={styles["header__bottom"]}>
-          <div>Repositories</div>
+          <h1 className={styles["header__title"]}>Repositories</h1>
           <Type handleTypeClick={handleTypeClick} />
         </div>
       </header>
