@@ -37,6 +37,7 @@ const List: React.FC<ListProps> = ({ data, handleNext, count }) => {
             onClick={() => handleOnClick(repository.name)}
             img={repository.avatar_url}
             name={repository.name}
+            login={repository.login}
           />
         ))}
       </InfiniteScroll>

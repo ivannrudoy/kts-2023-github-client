@@ -5,6 +5,7 @@ type RepositoryApi = {
   updated_at: string;
   owner: {
     avatar_url: string;
+    login: string;
   };
 };
 
@@ -14,6 +15,7 @@ type RepositoryModel = {
   stargazers_count: number;
   updated_at: string;
   avatar_url: string;
+  login: string;
 };
 
 const getInitialRepositoryApi = (): RepositoryApi => ({
@@ -23,6 +25,7 @@ const getInitialRepositoryApi = (): RepositoryApi => ({
   updated_at: "",
   owner: {
     avatar_url: "",
+    login: "",
   },
 });
 
@@ -33,6 +36,7 @@ const normalizeRepository = (from: RepositoryApi): RepositoryModel => {
     stargazers_count: from.stargazers_count,
     updated_at: from.updated_at,
     avatar_url: from.owner.avatar_url,
+    login: from.owner.login,
   };
 };
 
