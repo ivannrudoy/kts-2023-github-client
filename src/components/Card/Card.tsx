@@ -26,7 +26,7 @@ const Card: FC<CardProps> = ({
     >
       <img className={styles.card__img} alt={name} src={img} />
       <div>
-        <div>{name}</div>
+        <div className={styles.card__title}>{name}</div>
         {children}
       </div>
     </article>
