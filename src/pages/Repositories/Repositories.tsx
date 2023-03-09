@@ -88,7 +88,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
   // @TODO: Move to view
   return (
     <div>
-      <header>
+      <header className={styles.header}>
         <Name
           handleNameClick={handleNameClick}
           handleNameInput={handleNameInput}
