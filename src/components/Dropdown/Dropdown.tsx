@@ -6,15 +6,20 @@ import List from "./components/List";
 type DropownProps = HTMLAttributes<HTMLDivElement> & {
   handleItemClick: (ev: MouseEvent) => void;
   data: string[];
+  className: string;
 };
 
-export const Dropdown: FC<DropownProps> = ({ data, handleItemClick }) => {
+export const Dropdown: FC<DropownProps> = ({
+  data,
+  handleItemClick,
+  className,
+}) => {
   const [isHidden, setHidden] = useState<boolean>(true);
   const inputClick = () => {
     setHidden(!isHidden);
   };
   return (
-    <div>
+    <div className={className}>
       <Input onClick={inputClick} value={""} />
       <List data={data} handleItemClick={handleItemClick} isHidden={isHidden} />
     </div>
