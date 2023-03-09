@@ -1,13 +1,15 @@
 import React, { MouseEvent, FC, InputHTMLAttributes } from "react";
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+import Input from "@components/Input";
+
+type DropdownInputProps = InputHTMLAttributes<HTMLInputElement> & {
   onClick: (ev: MouseEvent<HTMLInputElement>) => void;
   value: string;
 };
 
-export const Input: FC<InputProps> = ({ value, onClick }) => {
-  return <input value={value} onClick={onClick} disabled />;
+export const DropdownInput: FC<DropdownInputProps> = ({ value, onClick }) => {
+  return <Input value={value} onChange={() => {}} onClick={onClick} disabled />;
 };
 
-export default Input;
-export { InputProps };
+export default DropdownInput;
+export { DropdownInputProps };
