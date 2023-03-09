@@ -18,6 +18,7 @@ const Name: FC<NameProps> = ({ handleNameInput, handleNameClick, value }) => {
         className={styles["repositories__input"]}
         value={value}
         onChange={handleNameInput}
+        placeholder="Enter organization name"
       />
       <Button onClick={handleNameClick} />
     </div>

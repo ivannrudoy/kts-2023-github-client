@@ -101,7 +101,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
       </header>
       <main>
         {repositoriesStore.responseState !== ResponseState.SUCCESS ? (
-          "Loading"
+          <></>
         ) : (
           <List
             handleNext={handleNext}

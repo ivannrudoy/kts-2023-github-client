@@ -1,5 +1,7 @@
 import React, { MouseEvent, FC, HTMLAttributes } from "react";
 
+import styles from "./Item.module.scss";
+
 type ItemProps = HTMLAttributes<HTMLDivElement> & {
   handleItemClick: (ev: MouseEvent) => void;
   value: string;
@@ -7,7 +9,11 @@ type ItemProps = HTMLAttributes<HTMLDivElement> & {
 
 export const Item: FC<ItemProps> = ({ value, handleItemClick }) => {
   return (
-    <div data-value={value} onClick={handleItemClick}>
+    <div
+      className={styles.dropdown__item}
+      data-value={value}
+      onClick={handleItemClick}
+    >
       {value}
     </div>
   );
