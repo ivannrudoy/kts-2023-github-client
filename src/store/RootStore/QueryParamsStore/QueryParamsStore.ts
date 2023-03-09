@@ -10,10 +10,10 @@ class QueryParamsStore {
   constructor() {
     makeObservable<QueryParamsStore, PrivateFields>(this, {
       _params: observable.ref,
-      // stringifiedParam: computed,
-      page: computed,
       params: computed,
       setSearch: action,
+      page: computed,
+      name: computed,
     });
   }
 
@@ -26,15 +26,27 @@ class QueryParamsStore {
     name: string,
     value: string
   ): URLSearchParams {
-    return new URLSearchParams({
-      [`${name}`]: value,
-    });
+    searchParams.delete(name);
+    searchParams.append(name, value);
+    return searchParams;
+  }
+
+  get name(): string {
+    const a = this.params["name"];
+    const n = a ?? "";
+    return `${n}`;
   }
 
   get page(): number {
     const a = this.params["page"];
     const p = parseInt(`${a}` ?? 1);
-    return isNaN(p) ? 1 : p;
+    return isNaN(p) ? -1 : p;
+  }
+
+  get type(): string {
+    const a = this.params["type"];
+    const n = a ?? "";
+    return `${n}`;
   }
 
   setSearch(search: string) {

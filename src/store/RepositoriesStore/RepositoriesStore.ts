@@ -11,7 +11,7 @@ import {
   normalizeCollection,
 } from "@store/models/shared/collection";
 import { buildEndpoint } from "@utils/urls";
-import { makeObservable } from "mobx";
+import { action, makeObservable } from "mobx";
 
 class RepositoriesStore extends GithubStore<
   CollecionModel<number, RepositoryApi>,
@@ -22,14 +22,18 @@ class RepositoriesStore extends GithubStore<
     order: [],
     entities: {},
   };
+  private prevName = "";
 
   constructor() {
     super();
 
-    makeObservable<RepositoriesStore>(this, {});
+    makeObservable<RepositoriesStore>(this, {
+      resetData: action,
+    });
   }
 
   get data(): RepositoryModel[] {
+    // @TODO Filter here
     return mapRepositoryApiModel(liniarizeCollection(this._data));
   }
 
@@ -42,27 +46,46 @@ class RepositoriesStore extends GithubStore<
     }
   }
 
-  async getRepositories(perPage: number, page: number) {
-    if (this.data.length === 0 && page > 1) {
-      for (let c = 2; c <= page; c++) {
+  resetData() {
+    this._data = {
+      order: [],
+      entities: {},
+    };
+  }
+
+  async getRepositories(
+    perPage: number,
+    page: number,
+    name: string,
+    type: string
+  ) {
+    if (page !== -1 && name !== "") {
+      if (this.data.length === 0 && page > 1) {
+        for (let c = 2; c <= page; c++) {
+          this.getDataFromApiStore(
+            buildEndpoint(`/orgs/${name}/repos`, {
+              per_page: perPage,
+              page: c,
+              type,
+            })
+          );
+        }
+      } else {
         this.getDataFromApiStore(
-          buildEndpoint(`/orgs/${this.ORG}/repos`, {
+          buildEndpoint(`/orgs/${name}/repos`, {
             per_page: perPage,
-            page: c,
+            page,
+            type,
           })
         );
       }
-    } else {
-      this.getDataFromApiStore(
-        buildEndpoint(`/orgs/${this.ORG}/repos`, { per_page: perPage, page })
-      );
     }
   }
 
   normalizeApiData(d: RepositoryApi[]): void {
     this.setData(
       normalizeCollection(
-        d.map((item) => normalizeRepository(item)),
+        d.map((item) => item),
         (el) => el.id
       )
     );

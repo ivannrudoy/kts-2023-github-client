@@ -1,0 +1,15 @@
+.repositories {
+    &__name {
+        display: flex;
+        flex-direction: row;
+        margin: {
+            bottom: 16px;
+        }
+    }
+    &__input {
+        width: 295px;
+        margin: {
+            right: 12px;
+        }
+    }
+}

@@ -29,13 +29,17 @@ const List: React.FC<ListProps> = ({ data, handleNext, count }) => {
         loader={<>Loading</>}
         dataLength={count}
         hasMore={true}
-        height={50}
+        height={500}
       >
         {data.map((repository: RepositoryModel) => (
           <Card
             key={repository.id}
             onClick={() => handleOnClick(repository.name)}
+            img={repository.avatar_url}
             name={repository.name}
+            login={repository.login}
+            stars={repository.stargazers_count}
+            updated={repository.updated_at}
           />
         ))}
       </InfiniteScroll>

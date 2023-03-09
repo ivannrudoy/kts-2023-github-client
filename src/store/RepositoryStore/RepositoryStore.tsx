@@ -22,7 +22,7 @@ class RepositoryStore extends GithubStore<
   }
 
   normalizeApiData(d: RepositoryApi): void {
-    this.setData(normalizeRepository(d));
+    this.setData(d);
   }
 
   async getRepository(name: string) {
