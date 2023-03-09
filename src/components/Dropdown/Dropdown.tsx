@@ -9,9 +9,12 @@ type DropownProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 export const Dropdown: FC<DropownProps> = ({ data, handleItemClick }) => {
+  const inputClick = () => {
+    console.log("click");
+  };
   return (
     <div>
-      <Input onClick={() => {}} value={""} />
+      <Input onClick={inputClick} value={""} />
       <List data={data} handleItemClick={handleItemClick} />
     </div>
   );

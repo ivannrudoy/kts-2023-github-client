@@ -26,7 +26,6 @@ type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
  */
 const Repositories: React.FC<RepositoriesProps> = () => {
   const [inputValue, setInputValue] = useState<string>();
-  const [typeValue, setTypeValue] = useState<string>();
   const [searchParams, setSearchParams] = useSearchParams();
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
   const queryStore = rootStore.query;
