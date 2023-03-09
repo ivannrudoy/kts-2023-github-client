@@ -4,7 +4,6 @@
   }
 }
 
-
 .button {  
   cursor: pointer;
   width: 50px;
@@ -14,6 +13,7 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 23px;
+  position: relative;
   border: {
     radius: 6px;
   }
@@ -31,5 +31,16 @@
   &:disabled {
     opacity: 1;
   }
+  &::after {
+    position: absolute;
+    content: "";
+    width: 24px;
+    height: 24px;
+    background-image: url("@assets/search.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin: auto;
+    top: 13px;
+    left: 13px;
+  }
 }
-
