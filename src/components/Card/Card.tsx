@@ -8,6 +8,7 @@ export type CardProps = {
   img: string;
   name: string;
   login: string;
+  stars: number;
   onClick: () => void;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -16,6 +17,7 @@ const Card: FC<CardProps> = ({
   img,
   name,
   login,
+  stars,
   onClick,
   children,
   ...attrs
@@ -30,6 +32,9 @@ const Card: FC<CardProps> = ({
       <div>
         <div className={styles.card__title}>{name}</div>
         <div className={styles.card__login}>{login}</div>
+        <div>
+          <div>{stars}</div>
+        </div>
         {children}
       </div>
     </article>
