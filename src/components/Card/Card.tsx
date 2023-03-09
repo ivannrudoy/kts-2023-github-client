@@ -9,6 +9,7 @@ export type CardProps = {
   name: string;
   login: string;
   stars: number;
+  updated: string;
   onClick: () => void;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -18,6 +19,7 @@ const Card: FC<CardProps> = ({
   name,
   login,
   stars,
+  updated,
   onClick,
   children,
   ...attrs
@@ -34,6 +36,7 @@ const Card: FC<CardProps> = ({
         <div className={styles.card__login}>{login}</div>
         <div>
           <div>{stars}</div>
+          <div>{updated}</div>
         </div>
         {children}
       </div>

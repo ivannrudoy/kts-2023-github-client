@@ -39,6 +39,7 @@ const List: React.FC<ListProps> = ({ data, handleNext, count }) => {
             name={repository.name}
             login={repository.login}
             stars={repository.stargazers_count}
+            updated={repository.updated_at}
           />
         ))}
       </InfiniteScroll>
