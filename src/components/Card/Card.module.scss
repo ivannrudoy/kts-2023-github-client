@@ -6,4 +6,19 @@
   margin: {
     bottom: 16px;
   }
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  &__img {
+    width: 80px;
+    height: 80px;
+    left: 12px;
+    top: 12px;
+    border-radius: 50%;
+    margin: {
+      right: 12px;
+    };
+  }
 }

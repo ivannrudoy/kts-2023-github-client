@@ -35,6 +35,7 @@ const List: React.FC<ListProps> = ({ data, handleNext, count }) => {
           <Card
             key={repository.id}
             onClick={() => handleOnClick(repository.name)}
+            img={repository.avatar_url}
             name={repository.name}
           />
         ))}

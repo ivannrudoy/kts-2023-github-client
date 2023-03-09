@@ -5,12 +5,14 @@ import classNames from "classnames";
 import styles from "./Card.module.scss";
 
 export type CardProps = {
+  img: string;
   name: string;
   onClick: () => void;
 } & HTMLAttributes<HTMLDivElement>;
 
 const Card: FC<CardProps> = ({
   className,
+  img,
   name,
   onClick,
   children,
@@ -22,8 +24,11 @@ const Card: FC<CardProps> = ({
       onClick={onClick}
       {...attrs}
     >
-      <div>{name}</div>
-      {children}
+      <img className={styles.card__img} alt={name} src={img} />
+      <div>
+        <div>{name}</div>
+        {children}
+      </div>
     </article>
   );
 };

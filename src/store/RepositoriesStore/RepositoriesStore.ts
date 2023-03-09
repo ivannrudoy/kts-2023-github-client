@@ -85,7 +85,7 @@ class RepositoriesStore extends GithubStore<
   normalizeApiData(d: RepositoryApi[]): void {
     this.setData(
       normalizeCollection(
-        d.map((item) => normalizeRepository(item)),
+        d.map((item) => item),
         (el) => el.id
       )
     );
