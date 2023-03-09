@@ -1,5 +1,6 @@
 .dropdown {
   &__list {
+    position: absolute;
     &_hidden {
       display: none;
     }

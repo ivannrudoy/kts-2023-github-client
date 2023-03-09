@@ -17,7 +17,12 @@ export const List: FC<ListProps> = ({
   isHidden = true,
 }) => {
   return (
-    <div className={classNames(isHidden && styles["dropdown__list_hidden"])}>
+    <div
+      className={classNames(
+        styles["dropdown__list"],
+        isHidden && styles["dropdown__list_hidden"]
+      )}
+    >
       {data.map((el) => (
         <Item key={el} value={el} handleItemClick={handleItemClick} />
       ))}
