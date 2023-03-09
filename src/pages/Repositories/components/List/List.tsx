@@ -1,27 +1,23 @@
 import * as React from "react";
-import { HTMLAttributes, useCallback } from "react";
+import { HTMLAttributes } from "react";
 
 import Card from "@components/Card";
 import { RepositoryModel } from "@store/models/Github";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useNavigate } from "react-router-dom";
 
 type ListProps = {
   data: RepositoryModel[];
+  handleOnClick: (name: string) => void;
   handleNext: () => void;
   count: number;
 } & HTMLAttributes<HTMLDivElement>;
 
-const List: React.FC<ListProps> = ({ data, handleNext, count }) => {
-  const navigate = useNavigate();
-
-  const handleOnClick = useCallback(
-    (name: string) => {
-      navigate(`/repository/${name}`);
-    },
-    [navigate]
-  );
-
+const List: React.FC<ListProps> = ({
+  data,
+  handleNext,
+  handleOnClick,
+  count,
+}) => {
   return (
     <div>
       <InfiniteScroll

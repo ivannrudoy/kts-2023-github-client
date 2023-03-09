@@ -12,7 +12,7 @@ import RepositoriesStore from "@store/RepositoriesStore";
 import rootStore from "@store/RootStore";
 import { ResponseState } from "@utils/ResponseState";
 import { observer, useLocalStore } from "mobx-react-lite";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import List from "./components/List";
 import Name from "./components/Name";
@@ -25,6 +25,7 @@ type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
  * @TODO Add loader
  */
 const Repositories: React.FC<RepositoriesProps> = () => {
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState<string>();
   const [searchParams, setSearchParams] = useSearchParams();
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
@@ -75,6 +76,9 @@ const Repositories: React.FC<RepositoriesProps> = () => {
     },
     [queryStore, repositoriesStore, searchParams, setSearchParams]
   );
+  const handleItemClick = (name: string) => {
+    navigate(`/repository/${queryStore.name}/${name}`);
+  };
 
   useEffect(() => {
     repositoriesStore.getRepositories(
@@ -105,6 +109,7 @@ const Repositories: React.FC<RepositoriesProps> = () => {
         ) : (
           <List
             handleNext={handleNext}
+            handleOnClick={handleItemClick}
             data={repositoriesStore.data}
             count={repositoriesStore.data.length}
           />
