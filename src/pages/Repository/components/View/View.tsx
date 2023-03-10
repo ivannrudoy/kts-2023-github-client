@@ -19,6 +19,13 @@ const View: React.FC<ViewProps> = ({ org, name, repository }) => {
       <div>
         <a href={repository.org_url}>{org}</a>
       </div>
+      {repository.topics.length > 0 && (
+        <div>
+          {repository.topics.map((topic) => (
+            <span>{`${topic} `}</span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
