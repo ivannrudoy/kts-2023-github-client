@@ -33,17 +33,17 @@ class RepositoriesStore extends GithubStore<
   }
 
   get data(): RepositoryModel[] {
-    // @TODO Filter here
     return mapRepositoryApiModel(liniarizeCollection(this._data));
   }
 
   setData(d: CollecionModel<number, RepositoryApi>): void {
-    if (this.data.length === 0) {
-      this._data = d;
-    } else {
-      this._data.order = this._data.order.concat(d.order);
-      this._data.entities = { ...this._data.entities, ...d.entities };
-    }
+    console.log(JSON.stringify(d));
+    // if (this.data.length === 0) {
+    this._data = d;
+    // } else {
+    //   this._data.order = this._data.order.concat(d.order);
+    //   this._data.entities = { ...this._data.entities, ...d.entities };
+    // }
   }
 
   resetData() {
@@ -60,25 +60,25 @@ class RepositoriesStore extends GithubStore<
     type: string
   ) {
     if (page !== -1 && name !== "") {
-      if (this.data.length === 0 && page > 1) {
-        for (let c = 2; c <= page; c++) {
-          this.getDataFromApiStore(
-            buildEndpoint(`/orgs/${name}/repos`, {
-              per_page: perPage,
-              page: c,
-              type,
-            })
-          );
-        }
-      } else {
-        this.getDataFromApiStore(
-          buildEndpoint(`/orgs/${name}/repos`, {
-            per_page: perPage,
-            page,
-            type,
-          })
-        );
-      }
+      //   if (this.data.length === 0 && page > 1) {
+      //     for (let c = 2; c <= page; c++) {
+      //       this.getDataFromApiStore(
+      //         buildEndpoint(`/orgs/${name}/repos`, {
+      //           per_page: perPage,
+      //           page: c,
+      //           type,
+      //         })
+      //       );
+      //     }
+      //   } else {
+      this.getDataFromApiStore(
+        buildEndpoint(`/orgs/${name}/repos`, {
+          per_page: perPage,
+          page,
+          type,
+        })
+      );
+      //   }
     }
   }
 

@@ -32,6 +32,11 @@ const Name: FC<NameProps> = () => {
   const handleNameClick = useCallback(() => {
     const sp = searchParams;
     queryStore.changeSearchParam(sp, "name", inputValue ?? queryStore.name);
+    queryStore.changeSearchParam(
+      sp,
+      "page",
+      `${queryStore.page === -1 ? 1 : queryStore.page}`
+    );
     setSearchParams(sp);
   }, [inputValue, queryStore, searchParams, setSearchParams]);
   return (

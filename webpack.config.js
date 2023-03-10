@@ -6,6 +6,7 @@ const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const ESLintPlugin = require('eslint-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const dist = "dist";
 const public = "public";
@@ -84,6 +85,7 @@ module.exports = {
       React: 'react'
     }),
     new ESLintPlugin(),
+    new Dotenv()
   ].filter(Boolean),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
