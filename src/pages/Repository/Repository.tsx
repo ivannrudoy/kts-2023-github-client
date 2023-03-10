@@ -22,7 +22,14 @@ const Repository: React.FC<RepositoryProps> = () => {
   }, [repositoryStore, readmeStore, org, name]);
 
   // @TODO Add loader
-  return <View org={org} name={name} repository={repositoryStore.data} />;
+  return (
+    <View
+      org={org}
+      name={name}
+      repository={repositoryStore.data}
+      readme={readmeStore.data}
+    />
+  );
 };
 
 export default observer(Repository);

@@ -7,9 +7,10 @@ type ViewProps = {
   org: string;
   name: string;
   repository: RepositoryModel;
+  readme: string;
 } & HTMLAttributes<HTMLDivElement>;
 
-const View: React.FC<ViewProps> = ({ org, name, repository }) => {
+const View: React.FC<ViewProps> = ({ org, name, repository, readme }) => {
   return (
     <div>
       <div>
@@ -22,12 +23,14 @@ const View: React.FC<ViewProps> = ({ org, name, repository }) => {
       {repository.topics.length > 0 && (
         <div>
           {repository.topics.map((topic) => (
-            <span>{`${topic} `}</span>
+            <span key={topic}>{`${topic} `}</span>
           ))}
         </div>
       )}
       <div>{repository.stargazers_count}</div>
       <div>{repository.watchers}</div>
+      <div>{repository.forks}</div>
+      <div dangerouslySetInnerHTML={{ __html: readme }} />
     </div>
   );
 };

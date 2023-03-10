@@ -1,26 +1,23 @@
 import GithubStore from "@store/GithubStore";
-import {
-  getInitialReadmeApi,
-  normalizeReadme,
-  ReadmeApi,
-  ReadmeModel,
-} from "@store/models/Github";
+import { normalizeReadme, ReadmeApi, ReadmeModel } from "@store/models/Github";
 
-class READMEStore extends GithubStore<ReadmeApi, ReadmeApi, ReadmeModel> {
-  protected _data: ReadmeApi = getInitialReadmeApi();
+class READMEStore extends GithubStore<string, string, string> {
+  // protected _data: ReadmeApi = getInitialReadmeApi();
+  protected _data: string = "";
+
   protected _headers = {
     Accept: "application/vnd.github.v3.html",
   };
 
-  get data(): ReadmeModel {
-    return normalizeReadme(this._data);
+  get data(): string {
+    return this._data;
   }
 
-  setData(d: ReadmeApi): void {
+  setData(d: string): void {
     this._data = d;
   }
 
-  normalizeApiData(d: ReadmeApi): void {
+  normalizeApiData(d: string): void {
     this.setData(d);
   }
 

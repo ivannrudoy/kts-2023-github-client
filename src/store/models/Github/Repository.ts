@@ -5,6 +5,7 @@ type RepositoryApi = {
   updated_at: string;
   topics: string[];
   watchers_count: number;
+  forks: number;
   owner: {
     html_url: string;
     avatar_url: string;
@@ -22,6 +23,7 @@ type RepositoryModel = {
   org_url: string;
   topics: string[];
   watchers: number;
+  forks: number;
 };
 
 const getInitialRepositoryApi = (): RepositoryApi => ({
@@ -31,6 +33,7 @@ const getInitialRepositoryApi = (): RepositoryApi => ({
   updated_at: "",
   topics: [],
   watchers_count: 0,
+  forks: 0,
   owner: {
     html_url: "",
     avatar_url: "",
@@ -49,6 +52,7 @@ const normalizeRepository = (from: RepositoryApi): RepositoryModel => {
     login: from.owner.login,
     org_url: from.owner.html_url,
     watchers: from.watchers_count,
+    forks: from.forks,
   };
 };
 
