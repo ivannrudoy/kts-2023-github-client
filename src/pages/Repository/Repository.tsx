@@ -7,6 +7,8 @@ import RepositoryStore from "@store/RepositoryStore";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 
+import View from "./components/View/View";
+
 type RepositoryProps = {} & HTMLAttributes<HTMLDivElement>;
 
 const Repository: React.FC<RepositoryProps> = () => {
@@ -19,7 +21,8 @@ const Repository: React.FC<RepositoryProps> = () => {
     readmeStore.getReadme(org, name);
   }, [repositoryStore, readmeStore, org, name]);
 
-  return <></>;
+  // @TODO Add loader
+  return <View org={org} name={name} repository={repositoryStore.data} />;
 };
 
 export default observer(Repository);
