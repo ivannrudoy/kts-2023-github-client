@@ -10,25 +10,30 @@ import {
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
+import { ResponseState } from "@utils/ResponseState";
 import { buildEndpoint } from "@utils/urls";
-import { action, makeObservable } from "mobx";
+import { action, computed, makeObservable } from "mobx";
 
 class RepositoriesStore extends GithubStore<
   CollecionModel<number, RepositoryApi>,
   RepositoryApi[],
   RepositoryModel[]
 > {
+  protected _aux: CollecionModel<number, RepositoryApi> = {
+    order: [],
+    entities: {},
+  };
   protected _data: CollecionModel<number, RepositoryApi> = {
     order: [],
     entities: {},
   };
-  private prevName = "";
 
   constructor() {
     super();
 
     makeObservable<RepositoriesStore>(this, {
       resetData: action,
+      count: computed
     });
   }
 
@@ -36,13 +41,17 @@ class RepositoriesStore extends GithubStore<
     return mapRepositoryApiModel(liniarizeCollection(this._data));
   }
 
+  get count(): number {
+    return this.data.length;
+  }
+
   setData(d: CollecionModel<number, RepositoryApi>): void {
-    // if (this.data.length === 0) {
     this._data = d;
-    // } else {
-    //   this._data.order = this._data.order.concat(d.order);
-    //   this._data.entities = { ...this._data.entities, ...d.entities };
-    // }
+  }
+
+  setAux(d: CollecionModel<number, RepositoryApi>): void {
+    this._aux.order = this._data.order.concat(d.order);
+    this._aux.entities = { ...this._data.entities, ...d.entities };
   }
 
   resetData() {
@@ -58,31 +67,22 @@ class RepositoriesStore extends GithubStore<
     name: string,
     type: string
   ) {
-    if (page !== -1 && name !== "") {
-      //   if (this.data.length === 0 && page > 1) {
-      //     for (let c = 2; c <= page; c++) {
-      //       this.getDataFromApiStore(
-      //         buildEndpoint(`/orgs/${name}/repos`, {
-      //           per_page: perPage,
-      //           page: c,
-      //           type,
-      //         })
-      //       );
-      //     }
-      //   } else {
-      this.getDataFromApiStore(
+    for (let c = 2; c <= page; c++) {
+      await this.getDataFromApiStore(
         buildEndpoint(`/orgs/${name}/repos`, {
           per_page: perPage,
-          page,
+          page: c,
           type,
         })
       );
-      //   }
     }
+    this.setData(this._aux);
+    console.log(JSON.stringify(this._data));
+    this.setResponseState(ResponseState.FULL_LOAD);
   }
 
   normalizeApiData(d: RepositoryApi[]): void {
-    this.setData(
+    this.setAux(
       normalizeCollection(
         d.map((item) => item),
         (el) => el.id

@@ -4,7 +4,10 @@ import { HTMLAttributes, useEffect, useState } from "react";
 import Card from "@components/Card";
 import { RepositoryModel } from "@store/models/Github";
 import RepositoriesStore from "@store/RepositoriesStore";
+import RepositoriesStoreMul from "@store/RepositoriesStoreMul";
 import rootStore from "@store/RootStore";
+import { ResponseState } from "@utils/ResponseState";
+import { response } from "express";
 import { observer, useLocalStore } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -26,6 +29,7 @@ const List: React.FC<ListProps> = () => {
   const [data, setData] = useState<RepositoryModel[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
+  const repositoriesStoreMul = useLocalStore(() => new RepositoriesStoreMul());
   const queryStore = rootStore.query;
   const navigate = useNavigate();
   const handleNext = React.useCallback(() => {
@@ -41,15 +45,13 @@ const List: React.FC<ListProps> = () => {
     setData([]);
   }, [queryStore.type]);
   useEffect(() => {
-    if (data.length < 5 * queryStore.page) {
-      for (let c = 1; c <= queryStore.page; c++) {
-        repositoriesStore.getRepositories(
-          5,
-          c,
-          queryStore.name,
-          queryStore.type
-        );
-      }
+    if (data.length < 1) {
+      repositoriesStoreMul.getRepositories(
+        5,
+        queryStore.page,
+        queryStore.name,
+        queryStore.type
+      );
     } else {
       repositoriesStore.getRepositories(
         5,
@@ -58,9 +60,15 @@ const List: React.FC<ListProps> = () => {
         queryStore.type
       );
     }
-  }, [queryStore.page, queryStore.name, queryStore.type, repositoriesStore]);
+  }, [queryStore.page, queryStore.name, queryStore.type]);
   useEffect(() => {
-    setData(data?.concat(repositoriesStore.data));
+    if (repositoriesStoreMul.responseState === ResponseState.FULL_LOAD) {
+      setData(repositoriesStoreMul.data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [repositoriesStoreMul.responseState]);
+  useEffect(() => {
+    setData(data.concat(repositoriesStore.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [repositoriesStore.data]);
   return (
