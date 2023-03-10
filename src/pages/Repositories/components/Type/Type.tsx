@@ -5,7 +5,7 @@ import Dropdown from "@components/Dropdown/Dropdown";
 import styles from "./Type.module.scss";
 
 type TypeProps = {
-  handleTypeClick: (ev: MouseEvent) => void;
+  // handleTypeClick: (ev: MouseEvent) => void;
 } & HTMLAttributes<HTMLDivElement>;
 
 const REPOSITORIES_TYPES = [
@@ -17,12 +17,14 @@ const REPOSITORIES_TYPES = [
   "member",
 ];
 
-const Type: FC<TypeProps> = ({ handleTypeClick }) => {
+// const Type: FC<TypeProps> = ({ handleTypeClick }) => {
+const Type: FC<TypeProps> = () => {
   return (
     <div>
       <Dropdown
         className={styles["header__type"]}
-        handleItemClick={handleTypeClick}
+        // handleItemClick={handleTypeClick}
+        handleItemClick={(ev: MouseEvent) => {}}
         data={REPOSITORIES_TYPES}
         placeholder="Type"
       />

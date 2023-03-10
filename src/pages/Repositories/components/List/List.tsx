@@ -6,28 +6,31 @@ import { RepositoryModel } from "@store/models/Github";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 type ListProps = {
-  data: RepositoryModel[];
-  handleOnClick: (name: string) => void;
-  handleNext: () => void;
-  count: number;
+  // data: RepositoryModel[];
+  // handleOnClick: (name: string) => void;
+  // handleNext: () => void;
+  // count: number;
 } & HTMLAttributes<HTMLDivElement>;
 
-const List: React.FC<ListProps> = ({
-  data,
-  handleNext,
-  handleOnClick,
-  count,
-}) => {
+// const List: React.FC<ListProps> = ({
+//   data,
+//   handleNext,
+//   handleOnClick,
+//   count,
+// }) => {
+const List: React.FC<ListProps> = () => {
   return (
     <div>
       <InfiniteScroll
-        next={handleNext}
+        // next={handleNext}
+        next={() => {}}
         loader={<>Loading</>}
-        dataLength={count}
+        // dataLength={count}
+        dataLength={0}
         hasMore={true}
         height={500}
       >
-        {data.map((repository: RepositoryModel) => (
+        {/* {data.map((repository: RepositoryModel) => (
           <Card
             key={repository.id}
             onClick={() => handleOnClick(repository.name)}
@@ -37,11 +40,11 @@ const List: React.FC<ListProps> = ({
             stars={repository.stargazers_count}
             updated={repository.updated_at}
           />
-        ))}
+        ))} */}
       </InfiniteScroll>
     </div>
   );
 };
 
 export type { ListProps };
-export default List;
+export default React.memo(List);
