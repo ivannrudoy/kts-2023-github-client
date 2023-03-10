@@ -24,11 +24,8 @@ class READMEStore extends GithubStore<ReadmeApi, ReadmeApi, ReadmeModel> {
     this.setData(d);
   }
 
-  async getReadme(name: string) {
-    this.getDataFromApiStore(
-      `/repos/${this.ORG}/${name}/readme`,
-      this._headers
-    );
+  async getReadme(org: string, name: string) {
+    this.getDataFromApiStore(`/repos/${org}/${name}/readme`, this._headers);
   }
 }
 

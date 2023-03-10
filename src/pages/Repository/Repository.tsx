@@ -10,14 +10,14 @@ import { useParams } from "react-router-dom";
 type RepositoryProps = {} & HTMLAttributes<HTMLDivElement>;
 
 const Repository: React.FC<RepositoryProps> = () => {
-  const { name = "" } = useParams();
+  const { org = "", name = "" } = useParams();
   const repositoryStore = useLocalStore(() => new RepositoryStore());
   const readmeStore = useLocalStore(() => new READMEStore());
 
   useEffect(() => {
-    repositoryStore.getRepository(name);
-    readmeStore.getReadme(name);
-  }, [repositoryStore, readmeStore, name]);
+    repositoryStore.getRepository(org, name);
+    readmeStore.getReadme(org, name);
+  }, [repositoryStore, readmeStore, org, name]);
 
   return <></>;
 };
