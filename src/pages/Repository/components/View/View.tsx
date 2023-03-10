@@ -26,6 +26,8 @@ const View: React.FC<ViewProps> = ({ org, name, repository }) => {
           ))}
         </div>
       )}
+      <div>{repository.stargazers_count}</div>
+      <div>{repository.watchers}</div>
     </div>
   );
 };
