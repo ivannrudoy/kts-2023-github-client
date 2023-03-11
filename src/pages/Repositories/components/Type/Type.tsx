@@ -27,9 +27,9 @@ const Type: FC<TypeProps> = () => {
     (ev: MouseEvent) => {
       const item = ev.target as HTMLDivElement;
       const value = item.dataset.value ?? "";
-      setSearchParams(
-        queryStore.changeSearchParam(searchParams, "type", value)
-      );
+      queryStore.changeSearchParam(searchParams, "type", value);
+      queryStore.changeSearchParam(searchParams, "page", "1");
+      setSearchParams(searchParams);
     },
     [queryStore, searchParams, setSearchParams]
   );
@@ -39,7 +39,7 @@ const Type: FC<TypeProps> = () => {
         className={styles["header__type"]}
         handleItemClick={handleTypeClick}
         data={REPOSITORIES_TYPES}
-        placeholder="Type"
+        placeholder={queryStore.type}
       />
     </div>
   );
