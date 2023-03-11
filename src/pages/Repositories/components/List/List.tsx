@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HTMLAttributes, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import Card from "@components/Card";
 import { RepositoryModel } from "@store/models/Github";
@@ -7,26 +7,15 @@ import RepositoriesStore from "@store/RepositoriesStore";
 import RepositoriesStoreMul from "@store/RepositoriesStoreMul";
 import rootStore from "@store/RootStore";
 import { ResponseState } from "@utils/ResponseState";
-import { response } from "express";
 import { observer, useLocalStore } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-type ListProps = {
-  // data: RepositoryModel[];
-  // handleOnClick: (name: string) => void;
-  // handleNext: () => void;
-  // count: number;
-} & HTMLAttributes<HTMLDivElement>;
-
-// const List: React.FC<ListProps> = ({
-//   data,
-//   handleNext,
-//   handleOnClick,
-//   count,
-// }) => {
-const List: React.FC<ListProps> = () => {
+const List: FC = () => {
   const [data, setData] = useState<RepositoryModel[]>([]);
+  const [responseState, setResponseState] = useState<ResponseState>(
+    ResponseState.LOADING
+  );
   const [searchParams, setSearchParams] = useSearchParams();
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
   const repositoriesStoreMul = useLocalStore(() => new RepositoriesStoreMul());
@@ -45,7 +34,8 @@ const List: React.FC<ListProps> = () => {
     setData([]);
   }, [queryStore.type]);
   useEffect(() => {
-    if (data.length < 1) {
+    console.log(queryStore.page)
+    if (data.length < 1 && queryStore.page > 1) {
       repositoriesStoreMul.getRepositories(
         5,
         queryStore.page,
@@ -60,10 +50,11 @@ const List: React.FC<ListProps> = () => {
         queryStore.type
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryStore.page, queryStore.name, queryStore.type]);
   useEffect(() => {
     if (repositoriesStoreMul.responseState === ResponseState.FULL_LOAD) {
-      setData(repositoriesStoreMul.data);
+      setData(data.concat(repositoriesStoreMul.data));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [repositoriesStoreMul.responseState]);
@@ -75,7 +66,7 @@ const List: React.FC<ListProps> = () => {
     <div>
       <InfiniteScroll
         next={handleNext}
-        loader={<>Loading</>}
+        loader={data.length !== 0 && <>Loading</>}
         dataLength={data.length}
         hasMore={true}
         height={500}
@@ -96,5 +87,4 @@ const List: React.FC<ListProps> = () => {
   );
 };
 
-export type { ListProps };
 export default observer(List);

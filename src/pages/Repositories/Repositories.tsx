@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HTMLAttributes } from "react";
+import { FC, HTMLAttributes, memo } from "react";
 
 import List from "./components/List";
 import Name from "./components/Name";
@@ -8,7 +8,7 @@ import styles from "./Repositories.module.scss";
 
 type RepositoriesProps = {} & HTMLAttributes<HTMLDivElement>;
 
-const Repositories: React.FC<RepositoriesProps> = () => {
+const Repositories: FC<RepositoriesProps> = () => {
   return (
     <div>
       <header className={styles.header}>
@@ -26,4 +26,4 @@ const Repositories: React.FC<RepositoriesProps> = () => {
 };
 
 export type { RepositoriesProps };
-export default React.memo(Repositories);
+export default memo(Repositories);

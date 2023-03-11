@@ -33,7 +33,7 @@ class RepositoriesStore extends GithubStore<
 
     makeObservable<RepositoriesStore>(this, {
       resetData: action,
-      count: computed
+      count: computed,
     });
   }
 
@@ -50,8 +50,8 @@ class RepositoriesStore extends GithubStore<
   }
 
   setAux(d: CollecionModel<number, RepositoryApi>): void {
-    this._aux.order = this._data.order.concat(d.order);
-    this._aux.entities = { ...this._data.entities, ...d.entities };
+    this._aux.order = this._aux.order.concat(d.order);
+    this._aux.entities = { ...this._aux.entities, ...d.entities };
   }
 
   resetData() {
@@ -67,7 +67,7 @@ class RepositoriesStore extends GithubStore<
     name: string,
     type: string
   ) {
-    for (let c = 2; c <= page; c++) {
+    for (let c = 1; c <= page; c++) {
       await this.getDataFromApiStore(
         buildEndpoint(`/orgs/${name}/repos`, {
           per_page: perPage,
