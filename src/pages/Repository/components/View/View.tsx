@@ -1,7 +1,9 @@
 import * as React from "react";
 import { HTMLAttributes } from "react";
 
+import Eye from "@assets/eye.svg";
 import Link from "@assets/link.svg";
+import Star from "@assets/star.svg";
 import { RepositoryModel } from "@store/models/Github";
 import { useNavigate } from "react-router-dom";
 
@@ -49,8 +51,20 @@ const View: React.FC<ViewProps> = ({ org, name, repository, readme }) => {
             </div>
           )}
           <div>
-            <div>{repository.stargazers_count}</div>
-            <div>{repository.watchers}</div>
+            <div className={styles.stars}>
+              <img className={styles.stars__star} src={Star} alt="" />
+              <span className={styles.stars__count}>
+                {`${repository.stargazers_count} `}
+              </span>{" "}
+              &nbsp;stars
+            </div>
+            <div className={styles.watchers}>
+              <img className={styles.watchers__icon} src={Eye} alt="" />
+              <span className={styles.watchers__count}>
+                {`${repository.watchers} `}
+              </span>{" "}
+              &nbsp;watching
+            </div>
             <div>{repository.forks}</div>
           </div>
         </section>
