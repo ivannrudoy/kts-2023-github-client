@@ -119,3 +119,24 @@
     font-weight: 600;
   }
 }
+
+.forks {
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #646769;
+  margin: {
+    bottom: 8px;
+  };
+  &__icon {
+    margin: {
+      right: 8px;
+    };
+  }
+  &__count {
+    font-weight: 600;
+  }
+}

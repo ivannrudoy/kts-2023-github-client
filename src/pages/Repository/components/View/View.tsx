@@ -2,6 +2,7 @@ import * as React from "react";
 import { HTMLAttributes } from "react";
 
 import Eye from "@assets/eye.svg";
+import Fork from "@assets/fork.svg";
 import Link from "@assets/link.svg";
 import Star from "@assets/star.svg";
 import { RepositoryModel } from "@store/models/Github";
@@ -65,7 +66,13 @@ const View: React.FC<ViewProps> = ({ org, name, repository, readme }) => {
               </span>{" "}
               &nbsp;watching
             </div>
-            <div>{repository.forks}</div>
+            <div className={styles.forks}>
+              <img className={styles.forks__icon} src={Fork} alt="" />
+              <span className={styles.forks__count}>
+                {`${repository.forks} `}
+              </span>{" "}
+              &nbsp;watching
+            </div>
           </div>
         </section>
         <section>
