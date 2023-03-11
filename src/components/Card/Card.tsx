@@ -14,6 +14,25 @@ export type CardProps = {
   onClick: () => void;
 } & HTMLAttributes<HTMLDivElement>;
 
+const formatDate = (d: string) => {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const d_ = new Date(Date.parse(d));
+  return `${d_.getDate()} ${months[d_.getMonth()]}`;
+};
+
 const Card: FC<CardProps> = ({
   className,
   img,
@@ -40,7 +59,9 @@ const Card: FC<CardProps> = ({
             <img alt={stars.toString()} src={StarYellow} />
             {` ${stars}`}
           </div>
-          <div>{updated}</div>
+          <div className={styles.card__updated}>
+            Updated {formatDate(updated)}
+          </div>
         </div>
         {children}
       </div>
