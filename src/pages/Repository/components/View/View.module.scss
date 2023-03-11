@@ -1,3 +1,9 @@
+.header {
+  margin: {
+    bottom: 24px;
+  };
+}
+
 .nav {
   &__bar {
     display: flex;
@@ -23,5 +29,27 @@
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
+  }
+}
+
+.org {
+  display: flex;
+  margin: {
+    bottom: 20px;
+  };
+  &__link {
+    text-decoration: none;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #0080FF;
+    margin: {
+      left: 6px;
+    };
   }
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { HTMLAttributes } from "react";
 
+import Link from "@assets/link.svg";
 import { RepositoryModel } from "@store/models/Github";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +22,7 @@ const View: React.FC<ViewProps> = ({ org, name, repository, readme }) => {
 
   return (
     <>
-      <header>
+      <header className={styles.header}>
         <nav className={styles.nav__bar}>
           <div onClick={handleBack} className={styles.nav__back}></div>
           <h1 className={styles.nav__title}>
@@ -30,10 +31,13 @@ const View: React.FC<ViewProps> = ({ org, name, repository, readme }) => {
         </nav>
       </header>
       <main>
+        <section className={styles.org}>
+          <img src={Link} alt="" />
+          <a className={styles.org__link} href={repository.org_url}>
+            {org}
+          </a>
+        </section>
         <section>
-          <div>
-            <a href={repository.org_url}>{org}</a>
-          </div>
           {repository.topics.length > 0 && (
             <div>
               {repository.topics.map((topic) => (
