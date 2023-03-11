@@ -22,9 +22,9 @@ const View: React.FC<ViewProps> = ({ org, name, repository, readme }) => {
   return (
     <>
       <header>
-        <nav>
+        <nav className={styles.nav__bar}>
           <div onClick={handleBack} className={styles.nav__back}></div>
-          <h1>
+          <h1 className={styles.nav__title}>
             {org}/{name}
           </h1>
         </nav>

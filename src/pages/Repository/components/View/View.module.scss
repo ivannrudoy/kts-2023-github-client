@@ -1,4 +1,8 @@
 .nav {
+  &__bar {
+    display: flex;
+    flex-direction: row;
+  }
   &__back {
     cursor: pointer;
     width: 16px;
@@ -7,5 +11,17 @@
       image: url("@assets/back.svg");
       repeat: no-repeat;
     };
+  }
+  &__title {
+    margin: {
+      top: 0;
+      bottom: 0;
+      left: 18px;
+    }
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
   }
 }
