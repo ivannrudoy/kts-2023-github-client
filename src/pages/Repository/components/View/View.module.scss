@@ -53,3 +53,27 @@
     };
   }
 }
+
+.topics {
+  margin: {
+    bottom: 20px;
+  }
+  &__item {
+    display: inline-flex;
+    padding: 4px 16px;
+    margin: {
+      right: 8px;
+    };
+    height: 22px;
+    background: #DAEDFF;
+    border-radius: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    align-items: center;
+    text-align: center;
+    color: #0066CC;
+  }
+}

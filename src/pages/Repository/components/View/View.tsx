@@ -31,23 +31,28 @@ const View: React.FC<ViewProps> = ({ org, name, repository, readme }) => {
         </nav>
       </header>
       <main>
-        <section className={styles.org}>
-          <img src={Link} alt="" />
-          <a className={styles.org__link} href={repository.org_url}>
-            {org}
-          </a>
-        </section>
         <section>
+          <div className={styles.org}>
+            <img src={Link} alt="" />
+            <a className={styles.org__link} href={repository.org_url}>
+              {org}
+            </a>
+          </div>
           {repository.topics.length > 0 && (
-            <div>
+            <div className={styles.topics}>
               {repository.topics.map((topic) => (
-                <span key={topic}>{`${topic} `}</span>
+                <span
+                  className={styles.topics__item}
+                  key={topic}
+                >{`${topic} `}</span>
               ))}
             </div>
           )}
-          <div>{repository.stargazers_count}</div>
-          <div>{repository.watchers}</div>
-          <div>{repository.forks}</div>
+          <div>
+            <div>{repository.stargazers_count}</div>
+            <div>{repository.watchers}</div>
+            <div>{repository.forks}</div>
+          </div>
         </section>
         <section>
           <article dangerouslySetInnerHTML={{ __html: readme }} />
