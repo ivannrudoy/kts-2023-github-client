@@ -71,11 +71,12 @@ const View: React.FC<ViewProps> = ({ org, name, repository, readme }) => {
               <span className={styles.forks__count}>
                 {`${repository.forks} `}
               </span>{" "}
-              &nbsp;watching
+              &nbsp;fork
             </div>
           </div>
         </section>
-        <section>
+        <section className={styles.readme}>
+          <h2 className={styles.readme__title}>README.md</h2>
           <article dangerouslySetInnerHTML={{ __html: readme }} />
         </section>
       </main>
