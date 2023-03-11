@@ -35,5 +35,23 @@
     font-size: 14px;
     line-height: 16px;
     color: #7E7E7E;
+    margin: {
+      top: 4px;
+    }
+  }
+  &__stats {
+    display: flex;
+    flex-direction: row;
+    margin: {
+      top: 4px;
+    }
+  }
+  &__stars {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #7E7E7E;
   }
 }

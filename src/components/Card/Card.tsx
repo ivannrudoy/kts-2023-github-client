@@ -1,5 +1,6 @@
 import React, { FC, HTMLAttributes, memo } from "react";
 
+import StarYellow from "@assets/star_yellow.svg";
 import classNames from "classnames";
 
 import styles from "./Card.module.scss";
@@ -34,8 +35,11 @@ const Card: FC<CardProps> = ({
       <div>
         <div className={styles.card__title}>{name}</div>
         <div className={styles.card__login}>{login}</div>
-        <div>
-          <div>{stars}</div>
+        <div className={styles.card__stats}>
+          <div className={styles.card__stars}>
+            <img alt={stars.toString()} src={StarYellow} />
+            {` ${stars}`}
+          </div>
           <div>{updated}</div>
         </div>
         {children}
