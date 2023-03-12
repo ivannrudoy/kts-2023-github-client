@@ -7,6 +7,7 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist -o gh-pages",
     "dev": "NODE_ENV=development yarn webpack serve --mode=development",
+    "dev-w": "set \"NODE_ENV=development\" & yarn webpack serve --mode=development",
     "build": "NODE_ENV=production yarn webpack --mode=production",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
