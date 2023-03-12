@@ -13,9 +13,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const List: FC = () => {
   const [data, setData] = useState<RepositoryModel[]>([]);
-  const [responseState, setResponseState] = useState<ResponseState>(
-    ResponseState.LOADING
-  );
+  const [load, setLoad] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
   const repositoriesStoreMul = useLocalStore(() => new RepositoriesStoreMul());
@@ -62,6 +60,14 @@ const List: FC = () => {
     setData(data.concat(repositoriesStore.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [repositoriesStore.data]);
+  useEffect((
+  ) => {
+    if (repositoriesStore.responseState === ResponseState.SUCCESS || repositoriesStoreMul.responseState === ResponseState.FULL_LOAD) {
+      setLoad(true);
+    } else {
+      setLoad(false);
+    }
+  }, [repositoriesStore.responseState, repositoriesStoreMul.responseState])
   return (
     <div>
       <InfiniteScroll
