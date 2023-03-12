@@ -10,6 +10,7 @@ import { ResponseState } from "@utils/ResponseState";
 import { observer, useLocalStore } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Loader from "@components/Loader";
 
 const List: FC = () => {
   const [data, setData] = useState<RepositoryModel[]>([]);
@@ -32,7 +33,6 @@ const List: FC = () => {
     setData([]);
   }, [queryStore.type]);
   useEffect(() => {
-    console.log(queryStore.page)
     if (data.length < 1 && queryStore.page > 1) {
       repositoriesStoreMul.getRepositories(
         5,
@@ -60,16 +60,19 @@ const List: FC = () => {
     setData(data.concat(repositoriesStore.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [repositoriesStore.data]);
-  useEffect((
-  ) => {
-    if (repositoriesStore.responseState === ResponseState.SUCCESS || repositoriesStoreMul.responseState === ResponseState.FULL_LOAD) {
+  useEffect(() => {
+    if (
+      repositoriesStore.responseState === ResponseState.SUCCESS ||
+      repositoriesStoreMul.responseState === ResponseState.FULL_LOAD
+    ) {
       setLoad(true);
     } else {
       setLoad(false);
     }
-  }, [repositoriesStore.responseState, repositoriesStoreMul.responseState])
+  }, [repositoriesStore.responseState, repositoriesStoreMul.responseState]);
   return (
     <div>
+      {!load && <Loader />}
       <InfiniteScroll
         next={handleNext}
         loader={data.length !== 0 && <>Loading</>}
