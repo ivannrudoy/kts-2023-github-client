@@ -1,6 +1,15 @@
 .text {
-    &_std {
+    &_roboto {
         font-family: 'Roboto', sans-serif;
-        font-style: normal;
+    }
+    &_h3 {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+    }
+    &_body {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
     }
 }
