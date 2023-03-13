@@ -1,5 +1,6 @@
-import React, { FC, HTMLAttributes } from "react";
+import React, { FC, HTMLAttributes, memo } from "react";
 
+import StarYellow from "@assets/star_yellow.svg";
 import classNames from "classnames";
 
 import styles from "./Card.module.scss";
@@ -12,6 +13,25 @@ export type CardProps = {
   updated: string;
   onClick: () => void;
 } & HTMLAttributes<HTMLDivElement>;
+
+const formatDate = (d: string) => {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const d_ = new Date(Date.parse(d));
+  return `${d_.getDate()} ${months[d_.getMonth()]}`;
+};
 
 const Card: FC<CardProps> = ({
   className,
@@ -34,9 +54,14 @@ const Card: FC<CardProps> = ({
       <div>
         <div className={styles.card__title}>{name}</div>
         <div className={styles.card__login}>{login}</div>
-        <div>
-          <div>{stars}</div>
-          <div>{updated}</div>
+        <div className={styles.card__stats}>
+          <div className={styles.card__stars}>
+            <img alt={stars.toString()} src={StarYellow} />
+            {` ${stars}`}
+          </div>
+          <div className={styles.card__updated}>
+            Updated {formatDate(updated)}
+          </div>
         </div>
         {children}
       </div>
@@ -44,4 +69,4 @@ const Card: FC<CardProps> = ({
   );
 };
 
-export default Card;
+export default memo(Card);

@@ -1,40 +1,89 @@
 import * as React from "react";
-import { HTMLAttributes, useCallback } from "react";
+import { FC, useEffect, useState } from "react";
 
 import Card from "@components/Card";
 import { RepositoryModel } from "@store/models/Github";
+import RepositoriesStore from "@store/RepositoriesStore";
+import RepositoriesStoreMul from "@store/RepositoriesStoreMul";
+import rootStore from "@store/RootStore";
+import { ResponseState } from "@utils/ResponseState";
+import { observer, useLocalStore } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Loader from "@components/Loader";
 
-type ListProps = {
-  data: RepositoryModel[];
-  handleNext: () => void;
-  count: number;
-} & HTMLAttributes<HTMLDivElement>;
-
-const List: React.FC<ListProps> = ({ data, handleNext, count }) => {
+const List: FC = () => {
+  const [data, setData] = useState<RepositoryModel[]>([]);
+  const [load, setLoad] = useState<boolean>(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const repositoriesStore = useLocalStore(() => new RepositoriesStore());
+  const repositoriesStoreMul = useLocalStore(() => new RepositoriesStoreMul());
+  const queryStore = rootStore.query;
   const navigate = useNavigate();
-
-  const handleOnClick = useCallback(
-    (name: string) => {
-      navigate(`/repository/${name}`);
-    },
-    [navigate]
-  );
-
+  const handleNext = React.useCallback(() => {
+    const p = queryStore.page + 1;
+    setSearchParams(
+      queryStore.changeSearchParam(searchParams, "page", p.toString())
+    );
+  }, [queryStore, setSearchParams, searchParams]);
+  const handleItemClick = (name: string) => {
+    navigate(`/repository/${queryStore.name}/${name}`);
+  };
+  useEffect(() => {
+    setData([]);
+  }, [queryStore.type]);
+  useEffect(() => {
+    if (data.length < 1 && queryStore.page > 1) {
+      repositoriesStoreMul.getRepositories(
+        5,
+        queryStore.page,
+        queryStore.name,
+        queryStore.type
+      );
+    } else {
+      repositoriesStore.getRepositories(
+        5,
+        queryStore.page,
+        queryStore.name,
+        queryStore.type
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queryStore.page, queryStore.name, queryStore.type]);
+  useEffect(() => {
+    if (repositoriesStoreMul.responseState === ResponseState.FULL_LOAD) {
+      setData(data.concat(repositoriesStoreMul.data));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [repositoriesStoreMul.responseState]);
+  useEffect(() => {
+    setData(data.concat(repositoriesStore.data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [repositoriesStore.data]);
+  useEffect(() => {
+    if (
+      repositoriesStore.responseState === ResponseState.SUCCESS ||
+      repositoriesStoreMul.responseState === ResponseState.FULL_LOAD
+    ) {
+      setLoad(true);
+    } else {
+      setLoad(false);
+    }
+  }, [repositoriesStore.responseState, repositoriesStoreMul.responseState]);
   return (
     <div>
+      {!load && <Loader />}
       <InfiniteScroll
         next={handleNext}
-        loader={<>Loading</>}
-        dataLength={count}
+        loader={data.length !== 0 && <>Loading</>}
+        dataLength={data.length}
         hasMore={true}
         height={500}
       >
         {data.map((repository: RepositoryModel) => (
           <Card
             key={repository.id}
-            onClick={() => handleOnClick(repository.name)}
+            onClick={() => handleItemClick(repository.name)}
             img={repository.avatar_url}
             name={repository.name}
             login={repository.login}
@@ -47,5 +96,4 @@ const List: React.FC<ListProps> = ({ data, handleNext, count }) => {
   );
 };
 
-export type { ListProps };
-export default List;
+export default observer(List);
