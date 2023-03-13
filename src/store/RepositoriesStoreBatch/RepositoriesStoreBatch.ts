@@ -12,9 +12,12 @@ import {
 } from "@store/models/shared/collection";
 import { ResponseState } from "@utils/ResponseState";
 import { buildEndpoint } from "@utils/urls";
-import { action, computed, makeObservable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 
-class RepositoriesStore extends GithubStore<
+
+type PrivateFields = "_responseStateBatch";
+
+class RepositoriesStoreBatch extends GithubStore<
   CollecionModel<number, RepositoryApi>,
   RepositoryApi[],
   RepositoryModel[]
@@ -27,14 +30,26 @@ class RepositoriesStore extends GithubStore<
     order: [],
     entities: {},
   };
+  private _responseStateBatch: ResponseState = ResponseState.INITIAL;
 
   constructor() {
     super();
 
-    makeObservable<RepositoriesStore>(this, {
+    makeObservable<RepositoriesStoreBatch, PrivateFields>(this, {
+      _responseStateBatch: observable,
+      setResponseStateBatch: action,
       resetData: action,
+      responseStateBatch: computed,
       count: computed,
     });
+  }
+
+  get responseStateBatch(): ResponseState {
+    return this._responseStateBatch;
+  }
+
+  setResponseStateBatch(state: ResponseState) {
+    this._responseStateBatch = state;
   }
 
   get data(): RepositoryModel[] {
@@ -67,6 +82,8 @@ class RepositoriesStore extends GithubStore<
     name: string,
     type: string
   ) {
+    this.setResponseStateBatch(ResponseState.BATCH_LOADING);
+    console.log(this.responseStateBatch);
     for (let c = 1; c <= page; c++) {
       await this.getDataFromApiStore(
         buildEndpoint(`/orgs/${name}/repos`, {
@@ -77,8 +94,7 @@ class RepositoriesStore extends GithubStore<
       );
     }
     this.setData(this._aux);
-    console.log(JSON.stringify(this._data));
-    this.setResponseState(ResponseState.FULL_LOAD);
+    this.setResponseStateBatch(ResponseState.BATCH_SUCCESS);
   }
 
   normalizeApiData(d: RepositoryApi[]): void {
@@ -91,4 +107,4 @@ class RepositoriesStore extends GithubStore<
   }
 }
 
-export default RepositoriesStore;
+export default RepositoriesStoreBatch;

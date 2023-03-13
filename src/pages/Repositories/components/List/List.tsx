@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from "react";
 import Card from "@components/Card";
 import { RepositoryModel } from "@store/models/Github";
 import RepositoriesStore from "@store/RepositoriesStore";
-import RepositoriesStoreMul from "@store/RepositoriesStoreMul";
+import RepositoriesStoreBatch from "@store/RepositoriesStoreBatch";
 import rootStore from "@store/RootStore";
 import { ResponseState } from "@utils/ResponseState";
 import { observer, useLocalStore } from "mobx-react-lite";
@@ -17,7 +17,7 @@ const List: FC = () => {
   const [load, setLoad] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
-  const repositoriesStoreMul = useLocalStore(() => new RepositoriesStoreMul());
+  const repositoriesStoreBatch = useLocalStore(() => new RepositoriesStoreBatch());
   const queryStore = rootStore.query;
   const navigate = useNavigate();
   const handleNext = React.useCallback(() => {
@@ -34,7 +34,7 @@ const List: FC = () => {
   }, [queryStore.type]);
   useEffect(() => {
     if (data.length < 1 && queryStore.page > 1) {
-      repositoriesStoreMul.getRepositories(
+      repositoriesStoreBatch.getRepositories(
         5,
         queryStore.page,
         queryStore.name,
@@ -51,28 +51,27 @@ const List: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryStore.page, queryStore.name, queryStore.type]);
   useEffect(() => {
-    if (repositoriesStoreMul.responseState === ResponseState.FULL_LOAD) {
-      setData(data.concat(repositoriesStoreMul.data));
+    if (repositoriesStoreBatch.responseStateBatch === ResponseState.BATCH_SUCCESS) {
+      setData(data.concat(repositoriesStoreBatch.data));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [repositoriesStoreMul.responseState]);
+  }, [repositoriesStoreBatch.responseStateBatch]);
   useEffect(() => {
     setData(data.concat(repositoriesStore.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [repositoriesStore.data]);
   useEffect(() => {
     if (
-      repositoriesStore.responseState === ResponseState.SUCCESS ||
-      repositoriesStoreMul.responseState === ResponseState.FULL_LOAD
+      repositoriesStoreBatch.responseStateBatch === ResponseState.BATCH_LOADING
     ) {
       setLoad(true);
     } else {
       setLoad(false);
     }
-  }, [repositoriesStore.responseState, repositoriesStoreMul.responseState]);
+  }, [repositoriesStoreBatch.responseStateBatch]);
   return (
     <div>
-      {!load && <Loader />}
+      {load && <Loader />}
       <InfiniteScroll
         next={handleNext}
         loader={data.length !== 0 && <>Loading</>}
