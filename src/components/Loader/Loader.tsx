@@ -1,7 +1,9 @@
-import React, { FC, HTMLAttributes, memo } from "react";
+import React, { FC, } from "react";
+
+import styles from "./Loader.module.scss";
 
 const Loader: FC = () => {
-    return <div>Loading</div>
+    return <div className={styles.loader}></div>
 }
 
 export default Loader;

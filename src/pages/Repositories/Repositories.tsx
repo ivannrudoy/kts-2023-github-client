@@ -1,3 +1,4 @@
+import Loader from "@components/Loader";
 import * as React from "react";
 import { FC, HTMLAttributes, memo } from "react";
 

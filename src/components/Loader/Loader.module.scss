@@ -1,0 +1,32 @@
+$size: 60px;
+$red: #FF5555;
+
+.loader {
+    width: inherit;
+    height: $size;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    &::after {
+        content: "";
+        width: $size;
+        height: $size;
+        position: absolute;
+        box-sizing: border-box;
+        border: 6px solid;
+        border-color: $red $red transparent $red;
+        border-radius: 50%;
+        background-color: white;
+        animation: clockwise 1.2s linear infinite;
+    }
+}
+
+@keyframes clockwise {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
