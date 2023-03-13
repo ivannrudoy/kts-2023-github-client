@@ -7,6 +7,7 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist -o gh-pages",
     "dev": "NODE_ENV=development yarn webpack serve --mode=development",
+    "dev-w": "set \"NODE_ENV=development\" & yarn webpack serve --mode=development",
     "build": "NODE_ENV=production yarn webpack --mode=production",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
@@ -76,6 +77,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "dotenv-webpack": "^8.0.1",
     "express": "^4.18.1",
     "mobx-react-lite": "^3.4.0",
     "regenerator-runtime": "^0.13.9"

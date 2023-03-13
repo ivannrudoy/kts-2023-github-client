@@ -11,6 +11,7 @@
   flex-direction: row;
   align-items: center;
   box-sizing: border-box;
+  cursor: pointer;
   &__img {
     width: 80px;
     height: 80px;
@@ -35,5 +36,32 @@
     font-size: 14px;
     line-height: 16px;
     color: #7E7E7E;
+    margin: {
+      top: 4px;
+    }
+  }
+  &__stats {
+    display: flex;
+    flex-direction: row;
+    margin: {
+      top: 4px;
+    }
+  }
+  &__stars {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #7E7E7E;
+  }
+  &__updated {    
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #7E7E7E;
+    margin-left: 20px;
   }
 }
