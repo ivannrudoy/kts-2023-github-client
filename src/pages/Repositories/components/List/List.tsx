@@ -15,6 +15,7 @@ import Loader, { Size } from "@components/Loader";
 const List: FC = () => {
   const [data, setData] = useState<RepositoryModel[]>([]);
   const [load, setLoad] = useState<boolean>(false);
+  const [prevName, setPrevName] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
   const repositoriesStoreBatch = useLocalStore(() => new RepositoriesStoreBatch());
@@ -33,6 +34,10 @@ const List: FC = () => {
     setData([]);
   }, [queryStore.type]);
   useEffect(() => {
+    if (prevName !== queryStore.name) {
+      setPrevName(queryStore.name);
+      setData([]);
+    }
     if (data.length < 1 && queryStore.page > 1) {
       repositoriesStoreBatch.getRepositories(
         5,
