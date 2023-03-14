@@ -4,6 +4,7 @@ import React, {
   HTMLAttributes,
   memo,
   useCallback,
+  useEffect,
   useState,
 } from "react";
 
@@ -16,27 +17,32 @@ import { useSearchParams } from "react-router-dom";
 import styles from "./Name.module.scss";
 
 type NameProps = {
-  // handleNameInput: (ev: ChangeEvent<HTMLInputElement>) => void;
-  // handleNameClick: () => void;
-  // value: string;
 } & HTMLAttributes<HTMLDivElement>;
 
-// const Name: FC<NameProps> = ({ handleNameInput, handleNameClick, value }) => {
 const Name: FC<NameProps> = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState<string>();
+  const [prevName, setPrevName] = useState<string>();
   const queryStore = rootStore.query;
   const handleNameInput = (ev: ChangeEvent<HTMLInputElement>) => {
     setInputValue(ev.target.value ?? queryStore.name);
   };
   const handleNameClick = useCallback(() => {
     const sp = searchParams;
-    queryStore.changeSearchParam(sp, "name", inputValue ?? queryStore.name);
-    queryStore.changeSearchParam(
-      sp,
-      "page",
-      `${queryStore.page === -1 ? 1 : queryStore.page}`
-    );
+    const name = inputValue ?? queryStore.name;
+
+    queryStore.changeSearchParam(sp, "name", name);
+
+    if (prevName !== name) {
+      setPrevName(name);
+      queryStore.changeSearchParam(sp, "page", "1");
+    } else {
+      queryStore.changeSearchParam(
+        sp,
+        "page",
+        `${queryStore.page === -1 ? 1 : queryStore.page}`
+      );
+    }
     setSearchParams(sp);
   }, [inputValue, queryStore, searchParams, setSearchParams]);
   return (

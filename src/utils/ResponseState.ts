@@ -2,7 +2,8 @@ enum ResponseState {
   INITIAL,
   LOADING,
   SUCCESS,
-  FULL_LOAD,
+  BATCH_LOADING,
+  BATCH_SUCCESS,
   ERROR,
 }
 
