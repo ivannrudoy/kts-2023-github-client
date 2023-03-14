@@ -11,6 +11,7 @@ import { observer, useLocalStore } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Loader from "@components/Loader";
+import { response } from "express";
 
 const List: FC = () => {
   const [data, setData] = useState<RepositoryModel[]>([]);
@@ -71,7 +72,10 @@ const List: FC = () => {
   }, [repositoriesStoreBatch.responseStateBatch]);
   return (
     <div>
-      {load && <Loader />}
+      {load ? <Loader /> :
+      (repositoriesStore.responseState === ResponseState.SUCCESS 
+      || repositoriesStoreBatch.responseStateBatch === ResponseState.BATCH_SUCCESS)
+      && data.length === 0 && <>No items to display, change type or org name</>}
       <InfiniteScroll
         next={handleNext}
         loader={data.length !== 0 && <>Loading</>}
