@@ -5,6 +5,7 @@ import Dropdown from "@components/Dropdown/Dropdown";
 
 import styles from "./Type.module.scss";
 import { useSearchParams } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
 type TypeProps = {
 } & HTMLAttributes<HTMLDivElement>;
@@ -43,5 +44,5 @@ const Type: FC<TypeProps> = () => {
   );
 };
 
-export default Type;
+export default observer(Type);
 export type { TypeProps };
