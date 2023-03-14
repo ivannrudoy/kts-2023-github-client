@@ -52,13 +52,16 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
     );
 
     if ((await response).status === ResponseCode.OK) {
-      const data = (await response).data;
       try {
-        this.normalizeApiData(data);
-        this.setResponseState(ResponseState.SUCCESS);
-        return;
-      } catch (e) {
-        this.setResponseState(ResponseState.ERROR);
+        const data = (await response).data;
+        try {
+          this.normalizeApiData(data);
+          this.setResponseState(ResponseState.SUCCESS);
+          return;
+        } catch (e) {
+          this.setResponseState(ResponseState.ERROR);
+        }
+      } catch (err) {
       }
     }
     response.catch((error) => {
