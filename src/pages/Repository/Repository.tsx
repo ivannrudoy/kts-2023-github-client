@@ -8,6 +8,8 @@ import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 
 import View from "./components/View/View";
+import { ResponseState } from "@utils/ResponseState";
+import Loader from "@components/Loader";
 
 type RepositoryProps = {} & HTMLAttributes<HTMLDivElement>;
 
@@ -21,14 +23,18 @@ const Repository: React.FC<RepositoryProps> = () => {
     readmeStore.getReadme(org, name);
   }, [repositoryStore, readmeStore, org, name]);
 
-  // @TODO Add loader
   return (
-    <View
-      org={org}
-      name={name}
-      repository={repositoryStore.data}
-      readme={readmeStore.data}
-    />
+    <>
+      { (repositoryStore.responseState === ResponseState.SUCCESS && readmeStore.responseState === ResponseState.SUCCESS)
+      ? <View
+          org={org}
+          name={name}
+          repository={repositoryStore.data}
+          readme={readmeStore.data}
+        />
+      : <Loader />
+      }
+    </>
   );
 };
 
