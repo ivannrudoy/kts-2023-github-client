@@ -7,7 +7,6 @@ import styles from "./Type.module.scss";
 import { useSearchParams } from "react-router-dom";
 
 type TypeProps = {
-  // handleTypeClick: (ev: MouseEvent) => void;
 } & HTMLAttributes<HTMLDivElement>;
 
 const REPOSITORIES_TYPES = [
@@ -19,7 +18,6 @@ const REPOSITORIES_TYPES = [
   "member",
 ];
 
-// const Type: FC<TypeProps> = ({ handleTypeClick }) => {
 const Type: FC<TypeProps> = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryStore = rootStore.query;
@@ -39,7 +37,7 @@ const Type: FC<TypeProps> = () => {
         className={styles["header__type"]}
         handleItemClick={handleTypeClick}
         data={REPOSITORIES_TYPES}
-        placeholder={queryStore.type}
+        placeholder={queryStore.type === "" ? "Type" : queryStore.type}
       />
     </div>
   );
