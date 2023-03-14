@@ -1,26 +1,43 @@
-$size: 60px;
+$size_l: 60px;
+$border_l: 6px;
+$size_s: 20px;
+$border_s: 4.5px;
 $red: #FF5555;
 
 .loader {
     width: inherit;
-    height: $size;
     position: relative;
     display: flex;
     justify-content: center;
     padding: 8px;
     &::after {
         content: "";
-        width: $size;
-        height: $size;
         position: absolute;
         box-sizing: border-box;
-        border: 6px solid;
         border-color: $red $red transparent $red;
         border-radius: 50%;
-        background-color: white;
+        background-color: transparent;
         animation: clockwise 1.2s linear infinite;
     }
 }
+
+@mixin loader_size($name, $size, $border_w) {
+    .loader {
+        &_size_#{$name} {
+            &::after {
+                width: $size;
+                height: $size;
+                border: {
+                    width: $border_w;
+                    style: solid;
+                }
+            }
+        }
+    }
+}
+
+@include loader_size("l", $size_l, $border_l);
+@include loader_size("s", $size_s, $border_s);
 
 @keyframes clockwise {
     0% {
