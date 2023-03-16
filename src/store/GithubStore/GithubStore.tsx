@@ -45,28 +45,32 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
     this.setResponseState(ResponseState.INITIAL);
     headers["Authorization"] = `Bearer ${process.env.TOKEN}`;
 
-    let response: AxiosPromise<I> = await this._apiStorage.request(
-      HTTPMethod.GET,
-      endpoint,
-      headers
-    );
+    try {
+      let response: AxiosPromise<I> = await this._apiStorage.request(
+        HTTPMethod.GET,
+        endpoint,
+        headers
+      );
 
-    if ((await response).status === ResponseCode.OK) {
-      try {
-        const data = (await response).data;
+      if ((await response).status === ResponseCode.OK) {
         try {
-          this.normalizeApiData(data);
-          this.setResponseState(ResponseState.SUCCESS);
-          return;
-        } catch (e) {
-          this.setResponseState(ResponseState.ERROR);
+          const data = (await response).data;
+          try {
+            this.normalizeApiData(data);
+            this.setResponseState(ResponseState.SUCCESS);
+            return;
+          } catch (e) {
+            this.setResponseState(ResponseState.ERROR);
+          }
+        } catch (err) {
         }
-      } catch (err) {
       }
+      response.catch((error) => {
+        this.setResponseState(ResponseState.ERROR);
+      });
+    } catch (error) {
+      console.log(error);
     }
-    response.catch((error) => {
-      this.setResponseState(ResponseState.ERROR);
-    });
   }
 
   abstract normalizeApiData(d: I): void;
