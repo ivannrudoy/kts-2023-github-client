@@ -80,6 +80,11 @@ const List: FC = () => {
       (repositoriesStore.responseState === ResponseState.SUCCESS 
       || repositoriesStoreBatch.responseStateBatch === ResponseState.BATCH_SUCCESS)
       && data.length === 0 && <>No items to display, change type or org name</>}
+      {
+        (repositoriesStore.responseState === ResponseState.ERROR_NOT_FOUND
+        || repositoriesStoreBatch.responseState === ResponseState.ERROR_NOT_FOUND)
+        && <>Cannot found the organization</>
+      }
       <InfiniteScroll
         next={handleNext}
         loader={data.length !== 0 && <Loader size={Size.s} />}
