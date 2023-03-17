@@ -4,7 +4,7 @@ import { HTTPMethod } from "@utils/HTTPMethod";
 import { ILocalStore } from "@utils/ILocalStore";
 import { ResponseCode } from "@utils/ResponseCode";
 import { ResponseState } from "@utils/ResponseState";
-import { AxiosPromise } from "axios";
+import axios, { AxiosError, AxiosPromise, AxiosResponse } from "axios";
 import { action, computed, makeObservable, observable } from "mobx";
 
 type PrivateFields = "_data" | "_responseState";
@@ -45,28 +45,40 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
     this.setResponseState(ResponseState.INITIAL);
     headers["Authorization"] = `Bearer ${process.env.TOKEN}`;
 
-    let response: AxiosPromise<I> = await this._apiStorage.request(
-      HTTPMethod.GET,
-      endpoint,
-      headers
-    );
+    try {
+      let response: AxiosPromise<I> = await this._apiStorage.request(
+        HTTPMethod.GET,
+        endpoint,
+        headers
+      );
 
-    if ((await response).status === ResponseCode.OK) {
-      try {
-        const data = (await response).data;
+      if ((await response).status === ResponseCode.OK) {
         try {
-          this.normalizeApiData(data);
-          this.setResponseState(ResponseState.SUCCESS);
-          return;
-        } catch (e) {
-          this.setResponseState(ResponseState.ERROR);
+          const data = (await response).data;
+          try {
+            this.normalizeApiData(data);
+            this.setResponseState(ResponseState.SUCCESS);
+            return;
+          } catch (e) {
+            this.setResponseState(ResponseState.ERROR);
+          }
+        } catch (err) {
         }
-      } catch (err) {
+      }
+      response.catch((error) => {
+        this.setResponseState(ResponseState.ERROR);
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const e = error as AxiosError;
+        const response = e.response as AxiosResponse ?? {};
+        const status = response.status;
+        if (status === ResponseCode.ERR_NOT_FOUND) {
+          this.setResponseState(ResponseState.ERROR_NOT_FOUND);
+        }
+        // @TODO Handle uknown error      
       }
     }
-    response.catch((error) => {
-      this.setResponseState(ResponseState.ERROR);
-    });
   }
 
   abstract normalizeApiData(d: I): void;
