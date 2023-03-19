@@ -38,9 +38,7 @@ const getSettingsForStyles = (withModules = false) => {
   }, 'sass-loader'];
 }
 
-module.exports = (env, argv) => {
-  console.log(argv)
-// module.exports = {
+module.exports = (_, argv) => {
   const cfg = {
     entry: entry,
     target: !isProd ? "web" : "browserslist",
@@ -89,10 +87,6 @@ module.exports = (env, argv) => {
     }),
     new ESLintPlugin(),
     argv.mode !== "production" && new Dotenv(),
-    new webpack.DefinePlugin({
-      "process.env": "{}",
-    })
-    // new Dotenv()
   ].filter(Boolean),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -115,6 +109,5 @@ module.exports = (env, argv) => {
     historyApiFallback: true
   }
   }
-  console.log(cfg);
   return cfg;
 }
