@@ -38,83 +38,76 @@ const getSettingsForStyles = (withModules = false) => {
   }, 'sass-loader'];
 }
 
-module.exports = (env, argv) => {
-  console.log(argv)
-// module.exports = {
+module.exports = (_, argv) => {
   const cfg = {
     entry: entry,
     target: !isProd ? "web" : "browserslist",
     devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
     output: {
       path: buildPath,
-    filename,
-  }, 
-  module: {
-    rules: [
-      {
-        test: /\.[tj]sx?$/,
-        use: 'babel-loader',
-      },
-      {
-        test: /\.module\.s?css$/,
-        use: getSettingsForStyles(true),
-      },
-      {
-        test: /\.s?css$/,
-        exclude: /\.module\.s?css$/,
-        use: getSettingsForStyles(false),
-      },
-      {
-        test: /\.(png|svg|jpg)$/,
-        type: 'asset',
-        parser: {
-          dataUrlCondition: {
-            maxSize: 10 * 1024
+      filename,
+    }, 
+    module: {
+      rules: [
+        {
+          test: /\.[tj]sx?$/,
+          use: 'babel-loader',
+        },
+        {
+          test: /\.module\.s?css$/,
+          use: getSettingsForStyles(true),
+        },
+        {
+          test: /\.s?css$/,
+          exclude: /\.module\.s?css$/,
+          use: getSettingsForStyles(false),
+        },
+        {
+          test: /\.(png|svg|jpg)$/,
+          type: 'asset',
+          parser: {
+            dataUrlCondition: {
+              maxSize: 10 * 1024
+            }
           }
-        }
-      },
-    ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(srcPath, 'index.html'),
-    }),
-    !isProd && new ReactRefreshWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name]-[hash].css',
-    }),
-    new TsCheckerPlugin(),
-    new webpack.ProvidePlugin({
-      React: 'react'
-    }),
-    new ESLintPlugin(),
-    argv.mode !== "production" && new Dotenv(),
-    new webpack.DefinePlugin({
-      "process.env": "{}",
-    })
-    // new Dotenv()
-  ].filter(Boolean),
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    alias: {
-      '@components': path.join(srcPath, 'components'),
-      '@config': path.join(srcPath, 'config'),
-      '@hooks': path.join(srcPath, 'hooks'),
-      '@store': path.join(srcPath, 'store'),
-      '@utils': path.join(srcPath, 'utils'),
-      '@pages': path.join(srcPath, 'pages'),
-      '@styles': path.join(srcPath, 'styles'),
-      '@assets': path.join(srcPath, 'assets'),
+        },
+      ],
     },
-  },
-  devServer: {
-    static: publicPath,
-    host: '127.0.0.1',
-    port: devServerPort,
-    hot: true,
-    historyApiFallback: true
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: path.join(srcPath, 'index.html'),
+      }),
+      !isProd && new ReactRefreshWebpackPlugin(),
+      new MiniCssExtractPlugin({
+        filename: '[name]-[hash].css',
+      }),
+      new TsCheckerPlugin(),
+      new webpack.ProvidePlugin({
+        React: 'react'
+      }),
+      new ESLintPlugin(),
+      argv.mode !== "production" && new Dotenv(),
+    ].filter(Boolean),
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      alias: {
+        '@components': path.join(srcPath, 'components'),
+        '@config': path.join(srcPath, 'config'),
+        '@hooks': path.join(srcPath, 'hooks'),
+        '@store': path.join(srcPath, 'store'),
+        '@utils': path.join(srcPath, 'utils'),
+        '@pages': path.join(srcPath, 'pages'),
+        '@styles': path.join(srcPath, 'styles'),
+        '@assets': path.join(srcPath, 'assets'),
+      },
+    },
+    devServer: {
+      static: publicPath,
+      host: '127.0.0.1',
+      port: devServerPort,
+      hot: true,
+      historyApiFallback: true
+    }
   }
-  }
-  console.log(cfg);
   return cfg;
 }

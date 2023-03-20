@@ -43,6 +43,8 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
 
   protected async getDataFromApiStore(endpoint: string, headers: any = {}) {
     this.setResponseState(ResponseState.INITIAL);
+    
+    // @disable on producion
     headers["Authorization"] = `Bearer ${process.env.TOKEN}`;
 
     try {
