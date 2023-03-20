@@ -87,10 +87,6 @@ module.exports = (_, argv) => {
     }),
     new ESLintPlugin(),
     argv.mode !== "production" && new Dotenv(),
-    new webpack.DefinePlugin({
-      "process.env": "{}",
-    })
-    // new Dotenv()
   ].filter(Boolean),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
