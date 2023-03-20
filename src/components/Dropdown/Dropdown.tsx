@@ -11,7 +11,6 @@ type DropownProps = HTMLAttributes<HTMLDivElement> & {
   placeholder?: string;
 };
 
-// @TODO Handle close on click outside
 export const Dropdown: FC<DropownProps> = ({
   data,
   handleItemClick,
