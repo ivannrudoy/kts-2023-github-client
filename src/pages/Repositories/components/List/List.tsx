@@ -11,6 +11,7 @@ import { observer, useLocalStore } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Loader, { Size } from "@components/Loader";
+import useRootStore from "@store/RootStore/hooks/useRootStore";
 
 const List: FC = () => {
   const [data, setData] = useState<RepositoryModel[]>([]);
@@ -19,7 +20,7 @@ const List: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const repositoriesStore = useLocalStore(() => new RepositoriesStore());
   const repositoriesStoreBatch = useLocalStore(() => new RepositoriesStoreBatch());
-  const queryStore = rootStore.query;
+  const queryStore = useRootStore().query;
   const navigate = useNavigate();
   const handleNext = React.useCallback(() => {
     const p = queryStore.page + 1;
