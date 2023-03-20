@@ -1,8 +1,10 @@
-import React, { ButtonHTMLAttributes, FC } from "react";
+import React, { FC } from "react";
 
 import styles from "./Button.module.scss";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type ButtonProps = {
+  onClick: () => void;
+};
 
 export const Button: FC<ButtonProps> = ({ onClick }) => {
   return <button className={styles["button"]} onClick={onClick} />;
