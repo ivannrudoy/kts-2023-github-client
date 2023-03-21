@@ -4,4 +4,4 @@ const useRootStore = () => {
   return rootStore;
 };
 
-export default useRootStore;
+export { useRootStore };
