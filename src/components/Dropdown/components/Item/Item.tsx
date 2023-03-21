@@ -1,8 +1,8 @@
-import React, { MouseEvent, FC, HTMLAttributes } from "react";
+import React, { MouseEvent, FC } from "react";
 
 import styles from "./Item.module.scss";
 
-type ItemProps = HTMLAttributes<HTMLDivElement> & {
+type ItemProps = {
   handleItemClick: (ev: MouseEvent) => void;
   value: string;
 };
