@@ -1,10 +1,11 @@
+import React, { MouseEvent, FC, useState, useRef } from "react";
+
 import useOutsideClick from "@hooks/useOutsideClick";
-import React, { MouseEvent, FC, HTMLAttributes, useState, useRef } from "react";
 
 import Input from "./components/Input";
 import List from "./components/List";
 
-type DropownProps = HTMLAttributes<HTMLDivElement> & {
+type DropownProps = {
   handleItemClick: (ev: MouseEvent) => void;
   data: string[];
   className: string;
