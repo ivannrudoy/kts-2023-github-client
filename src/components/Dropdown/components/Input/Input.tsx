@@ -1,10 +1,10 @@
-import React, { FC, InputHTMLAttributes } from "react";
+import React, { FC } from "react";
 
 import Input from "@components/Input";
 
 import styles from "./Input.module.scss";
 
-type DropdownInputProps = InputHTMLAttributes<HTMLInputElement> & {
+type DropdownInputProps = {
   onClick: () => void;
   value: string;
   placeholder?: string;
