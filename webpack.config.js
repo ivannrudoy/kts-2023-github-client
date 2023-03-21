@@ -38,14 +38,15 @@ const getSettingsForStyles = (withModules = false) => {
   }, 'sass-loader'];
 }
 
-module.exports = {
-  entry: entry,
-  target: !isProd ? "web" : "browserslist",
-  devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
-  output: {
-    path: buildPath,
+module.exports = (_, argv) => {
+  const cfg = {
+    entry: entry,
+    target: !isProd ? "web" : "browserslist",
+    devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
+    output: {
+      path: buildPath,
     filename,
-  },
+  }, 
   module: {
     rules: [
       {
@@ -85,7 +86,7 @@ module.exports = {
       React: 'react'
     }),
     new ESLintPlugin(),
-    new Dotenv()
+    argv.mode !== "production" && new Dotenv(),
   ].filter(Boolean),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -107,4 +108,6 @@ module.exports = {
     hot: true,
     historyApiFallback: true
   }
+  }
+  return cfg;
 }

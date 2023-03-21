@@ -2,6 +2,7 @@ import React, { FC, HTMLAttributes, memo } from "react";
 
 import StarYellow from "@assets/star_yellow.svg";
 import classNames from "classnames";
+import dayjs from "dayjs";
 
 import styles from "./Card.module.scss";
 
@@ -14,24 +15,7 @@ export type CardProps = {
   onClick: () => void;
 } & HTMLAttributes<HTMLDivElement>;
 
-const formatDate = (d: string) => {
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const d_ = new Date(Date.parse(d));
-  return `${d_.getDate()} ${months[d_.getMonth()]}`;
-};
+const formatDate = (d: string) => `${dayjs(d).format("DD MMM")}`;
 
 const Card: FC<CardProps> = ({
   className,
