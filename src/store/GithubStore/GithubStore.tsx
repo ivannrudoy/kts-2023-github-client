@@ -43,9 +43,9 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
 
   protected async getDataFromApiStore(endpoint: string, headers: any = {}) {
     this.setResponseState(ResponseState.INITIAL);
-    
+
     // @disable on producion
-    headers["Authorization"] = `Bearer ${process.env.TOKEN}`;
+    // headers["Authorization"] = `Bearer ${process.env.TOKEN}`;
 
     try {
       let response: AxiosPromise<I> = await this._apiStorage.request(
@@ -64,8 +64,7 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
           } catch (e) {
             this.setResponseState(ResponseState.ERROR);
           }
-        } catch (err) {
-        }
+        } catch (err) {}
       }
       response.catch((error) => {
         this.setResponseState(ResponseState.ERROR);
@@ -73,12 +72,12 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const e = error as AxiosError;
-        const response = e.response as AxiosResponse ?? {};
+        const response = (e.response as AxiosResponse) ?? {};
         const status = response.status;
         if (status === ResponseCode.ERR_NOT_FOUND) {
           this.setResponseState(ResponseState.ERROR_NOT_FOUND);
         }
-        // @TODO Handle uknown error      
+        // @TODO Handle uknown error
       }
     }
   }
