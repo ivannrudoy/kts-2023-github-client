@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC, useCallback, useState } from "react";
 
 import Button from "@components/Button";
 import Input from "@components/Input";
-import rootStore from "@store/RootStore";
+import { useQueryParamsStore } from "@store/RootStore";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const Name: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState<string>();
   const [prevName, setPrevName] = useState<string>();
-  const queryStore = rootStore.query;
+  const queryStore = useQueryParamsStore();
   const handleNameInput = (ev: ChangeEvent<HTMLInputElement>) => {
     setInputValue(ev.target.value ?? queryStore.name);
   };
@@ -33,6 +33,7 @@ const Name: FC = () => {
       );
     }
     setSearchParams(sp);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue, queryStore, searchParams, setSearchParams]);
   return (
     <div className={styles["repositories__name"]}>
