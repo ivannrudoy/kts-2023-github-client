@@ -1,11 +1,11 @@
-import React, { MouseEvent, FC, HTMLAttributes } from "react";
+import React, { MouseEvent, FC } from "react";
 
 import classNames from "classnames";
 
 import Item from "../Item";
 import styles from "./List.module.scss";
 
-type ListProps = HTMLAttributes<HTMLDivElement> & {
+type ListProps = {
   handleItemClick: (ev: MouseEvent) => void;
   data: string[];
   isHidden?: boolean;
