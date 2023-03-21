@@ -1,12 +1,4 @@
-import React, {
-  ChangeEvent,
-  FC,
-  HTMLAttributes,
-  memo,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { ChangeEvent, FC, useCallback, useState } from "react";
 
 import Button from "@components/Button";
 import Input from "@components/Input";
@@ -16,10 +8,7 @@ import { useSearchParams } from "react-router-dom";
 
 import styles from "./Name.module.scss";
 
-type NameProps = {
-} & HTMLAttributes<HTMLDivElement>;
-
-const Name: FC<NameProps> = () => {
+const Name: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState<string>();
   const [prevName, setPrevName] = useState<string>();
@@ -59,4 +48,3 @@ const Name: FC<NameProps> = () => {
 };
 
 export default observer(Name);
-export type { NameProps };
