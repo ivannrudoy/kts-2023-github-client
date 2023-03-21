@@ -1,7 +1,6 @@
 import GithubStore from "@store/GithubStore";
 import {
   mapRepositoryApiModel,
-  normalizeRepository,
   RepositoryApi,
   RepositoryModel,
 } from "@store/models/Github";
@@ -13,7 +12,6 @@ import {
 import { ResponseState } from "@utils/ResponseState";
 import { buildEndpoint } from "@utils/urls";
 import { action, computed, makeObservable, observable } from "mobx";
-
 
 type PrivateFields = "_responseStateBatch";
 
@@ -83,7 +81,6 @@ class RepositoriesStoreBatch extends GithubStore<
     type: string
   ) {
     this.setResponseStateBatch(ResponseState.BATCH_LOADING);
-    console.log(this.responseStateBatch);
     for (let c = 1; c <= page; c++) {
       await this.getDataFromApiStore(
         buildEndpoint(`/orgs/${name}/repos`, {

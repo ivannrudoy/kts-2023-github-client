@@ -8,7 +8,6 @@ export const useQueryParamsStoreInit = (): void => {
   let [_, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    console.log(pathname);
     if (search === "" && pathname === "/") {
       setSearchParams(
         new URLSearchParams({
