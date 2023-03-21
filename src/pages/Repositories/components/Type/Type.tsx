@@ -1,14 +1,11 @@
-import React, { MouseEvent, FC, HTMLAttributes, useCallback } from "react";
-import rootStore from "@store/RootStore";
+import React, { MouseEvent, FC, useCallback } from "react";
 
 import Dropdown from "@components/Dropdown/Dropdown";
+import { useQueryParamsStore } from "@store/RootStore";
+import { observer } from "mobx-react-lite";
+import { useSearchParams } from "react-router-dom";
 
 import styles from "./Type.module.scss";
-import { useSearchParams } from "react-router-dom";
-import { observer } from "mobx-react-lite";
-
-type TypeProps = {
-} & HTMLAttributes<HTMLDivElement>;
 
 const REPOSITORIES_TYPES = [
   "all",
@@ -19,9 +16,9 @@ const REPOSITORIES_TYPES = [
   "member",
 ];
 
-const Type: FC<TypeProps> = () => {
+const Type: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const queryStore = rootStore.query;
+  const queryStore = useQueryParamsStore();
   const handleTypeClick = useCallback(
     (ev: MouseEvent) => {
       const item = ev.target as HTMLDivElement;
@@ -45,4 +42,3 @@ const Type: FC<TypeProps> = () => {
 };
 
 export default observer(Type);
-export type { TypeProps };
