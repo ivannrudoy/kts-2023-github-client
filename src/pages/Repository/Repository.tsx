@@ -5,7 +5,6 @@ import Loader from "@components/Loader";
 import { useLocalStore } from "@hooks/useLocalStore";
 import READMEStore from "@store/READMEStore";
 import RepositoryStore from "@store/RepositoryStore";
-import { ResponseState } from "@utils/ResponseState";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 
@@ -23,17 +22,14 @@ const Repository: React.FC = () => {
 
   return (
     <>
-      {repositoryStore.responseState === ResponseState.SUCCESS &&
-      readmeStore.responseState === ResponseState.SUCCESS ? (
-        <View
-          org={org}
-          name={name}
-          repository={repositoryStore.data}
-          readme={readmeStore.data}
-        />
-      ) : (
-        <Loader />
-      )}
+      <View
+        org={org}
+        name={name}
+        repository={repositoryStore.data}
+        repositoryState={repositoryStore.responseState}
+        readme={readmeStore.data}
+        readmeState={readmeStore.responseState}
+      />
     </>
   );
 };

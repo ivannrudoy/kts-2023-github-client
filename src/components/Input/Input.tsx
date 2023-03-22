@@ -1,5 +1,6 @@
-import classNames from "classnames";
 import React, { ChangeEvent, FC, InputHTMLAttributes } from "react";
+
+import classNames from "classnames";
 
 import styles from "./Input.module.scss";
 
