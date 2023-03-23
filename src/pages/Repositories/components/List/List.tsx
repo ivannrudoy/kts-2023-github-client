@@ -88,7 +88,9 @@ const List: FC = () => {
         (repositoriesStore.responseState === ResponseState.SUCCESS ||
           repositoriesStoreBatch.responseStateBatch ===
             ResponseState.BATCH_SUCCESS) &&
-        data.length === 0 && <>No items to display, change type or org name</>
+        data.length === 0 && (
+          <Error message="No items to display, change type or org name" />
+        )
       )}
       {(repositoriesStore.responseState === ResponseState.ERROR_NOT_FOUND ||
         repositoriesStoreBatch.responseState ===
@@ -104,7 +106,7 @@ const List: FC = () => {
       >
         {data.map((repository: RepositoryModel) => (
           <Card
-            key={repository.id}
+            key={repository.id + queryStore.type}
             onClick={() => handleItemClick(repository.name)}
             img={repository.avatar_url}
             name={repository.name}
