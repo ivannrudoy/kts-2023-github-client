@@ -42,21 +42,11 @@ const List: FC = () => {
       setPrevName(queryStore.name);
       setData([]);
     }
-    if (data.length < 1 && queryStore.page > 1) {
-      repositoriesStoreBatch.getRepositories(
-        5,
-        queryStore.page,
-        queryStore.name,
-        queryStore.type
-      );
-    } else {
-      repositoriesStore.getRepositories(
-        5,
-        queryStore.page,
-        queryStore.name,
-        queryStore.type
-      );
-    }
+    const store =
+      data.length < 1 && queryStore.page > 1
+        ? repositoriesStoreBatch
+        : repositoriesStore;
+    store.getRepositories(5, queryStore.page, queryStore.name, queryStore.type);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryStore.page, queryStore.name, queryStore.type]);
   useEffect(() => {
@@ -88,7 +78,9 @@ const List: FC = () => {
         (repositoriesStore.responseState === ResponseState.SUCCESS ||
           repositoriesStoreBatch.responseStateBatch ===
             ResponseState.BATCH_SUCCESS) &&
-        data.length === 0 && <>No items to display, change type or org name</>
+        data.length === 0 && (
+          <Error message="No items to display, change type or org name" />
+        )
       )}
       {(repositoriesStore.responseState === ResponseState.ERROR_NOT_FOUND ||
         repositoriesStoreBatch.responseState ===
@@ -104,7 +96,7 @@ const List: FC = () => {
       >
         {data.map((repository: RepositoryModel) => (
           <Card
-            key={repository.id}
+            key={repository.id + queryStore.type}
             onClick={() => handleItemClick(repository.name)}
             img={repository.avatar_url}
             name={repository.name}
