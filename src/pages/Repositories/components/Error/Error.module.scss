@@ -1,0 +1,21 @@
+$red: #FF5555;
+
+.error {
+  font-family: 'Roboto', sans-serif;
+  padding: 8px;
+  border: 1px solid $red;
+  border-radius: 8px;
+  width: 345px;
+  &__header {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    color: $red;
+  }
+  &__body {
+    margin: {
+      top: 8px;
+      bottom: 8px;
+    };
+  }
+}

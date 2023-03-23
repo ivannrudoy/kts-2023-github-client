@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
 
-import Loader from "@components/Loader";
 import { useLocalStore } from "@hooks/useLocalStore";
 import READMEStore from "@store/READMEStore";
 import RepositoryStore from "@store/RepositoryStore";
