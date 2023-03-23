@@ -16,9 +16,7 @@ type LoaderProps = {
 
 const Loader: FC<LoaderProps> = ({ size = Size.l }) => {
   return (
-    <div
-      className={classNames(styles.loader, styles[`loader_size_${size}`])}
-    ></div>
+    <div className={classNames(styles.loader, styles[`loader_size_${size}`])} />
   );
 };
 
