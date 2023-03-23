@@ -1,0 +1,18 @@
+.dropdown {
+  &__item {
+    cursor: pointer;
+    height: 50px;
+    padding-left: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #D9D9D9;
+    &_active {
+      background-color: #F1F1F1;
+    }
+  }
+}

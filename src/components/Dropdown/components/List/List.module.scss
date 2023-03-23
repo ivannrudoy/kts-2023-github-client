@@ -1,0 +1,18 @@
+.dropdown {
+  &__list {
+    width: inherit;
+    position: absolute;
+    margin-top: 8px;
+    border: 1px solid #D9D9D9;
+    background-color: white;
+    border-radius: 6px;
+    height: 147px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    &_hidden {
+      display: none;
+    }
+  }
+}
