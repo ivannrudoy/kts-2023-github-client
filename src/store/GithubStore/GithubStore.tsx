@@ -45,7 +45,7 @@ abstract class GithubStore<D, I, O> implements ILocalStore {
     this.setResponseState(ResponseState.INITIAL);
 
     // @disable on producion
-    headers["Authorization"] = `Bearer ${process.env.TOKEN}`;
+    // headers["Authorization"] = `Bearer ${process.env.TOKEN}`;
 
     try {
       let response: AxiosPromise<I> = await this._apiStorage.request(
