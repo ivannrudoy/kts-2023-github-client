@@ -42,21 +42,11 @@ const List: FC = () => {
       setPrevName(queryStore.name);
       setData([]);
     }
-    if (data.length < 1 && queryStore.page > 1) {
-      repositoriesStoreBatch.getRepositories(
-        5,
-        queryStore.page,
-        queryStore.name,
-        queryStore.type
-      );
-    } else {
-      repositoriesStore.getRepositories(
-        5,
-        queryStore.page,
-        queryStore.name,
-        queryStore.type
-      );
-    }
+    const store =
+      data.length < 1 && queryStore.page > 1
+        ? repositoriesStoreBatch
+        : repositoriesStore;
+    store.getRepositories(5, queryStore.page, queryStore.name, queryStore.type);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryStore.page, queryStore.name, queryStore.type]);
   useEffect(() => {
