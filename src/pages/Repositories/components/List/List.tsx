@@ -12,6 +12,8 @@ import { observer, useLocalStore } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
+import Error from "../Error";
+
 const List: FC = () => {
   const [data, setData] = useState<RepositoryModel[]>([]);
   const [load, setLoad] = useState<boolean>(false);
@@ -90,7 +92,9 @@ const List: FC = () => {
       )}
       {(repositoriesStore.responseState === ResponseState.ERROR_NOT_FOUND ||
         repositoriesStoreBatch.responseState ===
-          ResponseState.ERROR_NOT_FOUND) && <>Cannot found the organization</>}
+          ResponseState.ERROR_NOT_FOUND) && (
+        <Error message="Cannot found the organization" />
+      )}
       <InfiniteScroll
         next={handleNext}
         loader={data.length !== 0 && <Loader size={Size.s} />}
