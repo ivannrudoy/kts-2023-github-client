@@ -1,7 +1,6 @@
 import GithubStore from "@store/GithubStore";
 import {
   mapRepositoryApiModel,
-  normalizeRepository,
   RepositoryApi,
   RepositoryModel,
 } from "@store/models/Github";
@@ -37,12 +36,7 @@ class RepositoriesStore extends GithubStore<
   }
 
   setData(d: CollectionModel<number, RepositoryApi>): void {
-    // if (this.data.length === 0) {
     this._data = d;
-    // } else {
-    //   this._data.order = this._data.order.concat(d.order);
-    //   this._data.entities = { ...this._data.entities, ...d.entities };
-    // }
   }
 
   resetData() {
@@ -59,17 +53,6 @@ class RepositoriesStore extends GithubStore<
     type: string
   ) {
     if (page !== -1 && name !== "") {
-      //   if (this.data.length === 0 && page > 1) {
-      //     for (let c = 2; c <= page; c++) {
-      //       this.getDataFromApiStore(
-      //         buildEndpoint(`/orgs/${name}/repos`, {
-      //           per_page: perPage,
-      //           page: c,
-      //           type,
-      //         })
-      //       );
-      //     }
-      //   } else {
       this.getDataFromApiStore(
         buildEndpoint(`/orgs/${name}/repos`, {
           per_page: perPage,
@@ -77,7 +60,6 @@ class RepositoriesStore extends GithubStore<
           type,
         })
       );
-      //   }
     }
   }
 
