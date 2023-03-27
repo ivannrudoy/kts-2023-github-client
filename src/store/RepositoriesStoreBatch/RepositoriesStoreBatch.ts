@@ -5,7 +5,7 @@ import {
   RepositoryModel,
 } from "@store/models/Github";
 import {
-  CollecionModel,
+  CollectionModel,
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
@@ -16,15 +16,15 @@ import { action, computed, makeObservable, observable } from "mobx";
 type PrivateFields = "_responseStateBatch";
 
 class RepositoriesStoreBatch extends GithubStore<
-  CollecionModel<number, RepositoryApi>,
+  CollectionModel<number, RepositoryApi>,
   RepositoryApi[],
   RepositoryModel[]
 > {
-  protected _aux: CollecionModel<number, RepositoryApi> = {
+  protected _aux: CollectionModel<number, RepositoryApi> = {
     order: [],
     entities: {},
   };
-  protected _data: CollecionModel<number, RepositoryApi> = {
+  protected _data: CollectionModel<number, RepositoryApi> = {
     order: [],
     entities: {},
   };
@@ -58,11 +58,11 @@ class RepositoriesStoreBatch extends GithubStore<
     return this.data.length;
   }
 
-  setData(d: CollecionModel<number, RepositoryApi>): void {
+  setData(d: CollectionModel<number, RepositoryApi>): void {
     this._data = d;
   }
 
-  setAux(d: CollecionModel<number, RepositoryApi>): void {
+  setAux(d: CollectionModel<number, RepositoryApi>): void {
     this._aux.order = this._aux.order.concat(d.order);
     this._aux.entities = { ...this._aux.entities, ...d.entities };
   }

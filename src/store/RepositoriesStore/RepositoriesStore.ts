@@ -6,7 +6,7 @@ import {
   RepositoryModel,
 } from "@store/models/Github";
 import {
-  CollecionModel,
+  CollectionModel,
   liniarizeCollection,
   normalizeCollection,
 } from "@store/models/shared/collection";
@@ -14,11 +14,11 @@ import { buildEndpoint } from "@utils/urls";
 import { action, makeObservable } from "mobx";
 
 class RepositoriesStore extends GithubStore<
-  CollecionModel<number, RepositoryApi>,
+  CollectionModel<number, RepositoryApi>,
   RepositoryApi[],
   RepositoryModel[]
 > {
-  protected _data: CollecionModel<number, RepositoryApi> = {
+  protected _data: CollectionModel<number, RepositoryApi> = {
     order: [],
     entities: {},
   };
@@ -36,7 +36,7 @@ class RepositoriesStore extends GithubStore<
     return mapRepositoryApiModel(liniarizeCollection(this._data));
   }
 
-  setData(d: CollecionModel<number, RepositoryApi>): void {
+  setData(d: CollectionModel<number, RepositoryApi>): void {
     // if (this.data.length === 0) {
     this._data = d;
     // } else {
