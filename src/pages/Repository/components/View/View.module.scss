@@ -9,15 +9,6 @@
     display: flex;
     flex-direction: row;
   }
-  &__back {
-    cursor: pointer;
-    width: 16px;
-    height: 25px;
-    background: {
-      image: url("@assets/back.svg");
-      repeat: no-repeat;
-    };
-  }
   &__title {
     margin: {
       top: 0;

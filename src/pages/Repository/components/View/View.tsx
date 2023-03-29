@@ -9,10 +9,11 @@ import Loader from "@components/Loader";
 import { RepositoryModel } from "@store/models/Github";
 import RepositoryStore from "@store/RepositoryStore";
 import { ResponseState } from "@utils/ResponseState";
-import { useNavigate } from "react-router-dom";
 
+import Back from "../Back";
 import styles from "./View.module.scss";
 
+// @TODO Move to file
 type ViewProps = {
   org: string;
   name: string;
@@ -30,16 +31,11 @@ const View: React.FC<ViewProps> = ({
   repositoryState,
   readmeState,
 }) => {
-  const navigate = useNavigate();
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   return (
     <>
       <header className={styles.header}>
         <nav className={styles.nav__bar}>
-          <div onClick={handleBack} className={styles.nav__back}></div>
+          <Back />
           <h1 className={styles.nav__title}>
             {org}/{name}
           </h1>
